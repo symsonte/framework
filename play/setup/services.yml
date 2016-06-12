@@ -1,0 +1,3 @@
+aliases:
+    symsonte.caller: symsonte.ordinary_caller
+    yosmy.recharge.ding.query_api: yosmy.recharge.ding.proxied_query_api

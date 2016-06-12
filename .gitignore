@@ -1,0 +1,11 @@
+config/firebase-credentials.json
+config/parameters.yml
+var/cdn/file/*
+!var/cdn/file/.gitkeep
+var/cdn/cubacelpromo/*
+!var/cdn/cubacelpromo/.gitkeep
+var/cache/*
+!var/cache/.gitkeep
+var/db/*
+!var/db/.gitkeep
+/vendor/
