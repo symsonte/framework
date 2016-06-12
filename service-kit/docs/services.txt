@@ -1,0 +1,17 @@
+A vendor has classes (services).
+
+Symsonte gives a way to load those services using dependency injection.
+But you should declare your dependency setup classes.
+
+Those classes must have the tag "setup_init" and will be called when the container is being
+created. It receive an storer. And then the class can add its service declarations.
+It can also inject some pioneer classes like:
+framework.service.composer_installer
+framework.service.vendor_installer
+framework.service.resource.loader
+
+A class can also has the tag "setup_add" and will be called each time a service is added.
+It will receive the service declaration being added.
+And then the class can modify it.
+
+To use that setup you can use the initializer

@@ -1,0 +1,57 @@
+<?php
+
+namespace Symsonte\Http\Server\Request\Resolution\Resource;
+
+use Symsonte\Http\Server\Request\MethodMatch;
+use Symsonte\Http\Server\Request\Resolution;
+use Symsonte\Http\Server\Request\UriMatch;
+use Symsonte\Service\Declaration\Call;
+use Symsonte\Resource\Compiler as BaseComposer;
+use Symsonte\Resource\UnsupportedNormalizationException;
+
+/**
+ * @author Yosmany Garcia <yosmanyga@gmail.com>
+ *
+ * @ds\service({
+ *     private: true,
+ *     tags: ['symsonte.http.server.request.resolution.resource.compiler']
+ * })
+ *
+ * @di\service({
+ *     private: true,
+ *     tags: ['symsonte.http.server.request.resolution.resource.compiler']
+ * })
+ */
+class Compiler implements BaseComposer
+{
+    /**
+     * @param Normalization $normalization
+     *
+     * @return Compilation
+     *
+     * @throws UnsupportedNormalizationException
+     */
+    public function compile($normalization)
+    {
+        if (!$normalization instanceof Normalization) {
+            throw new UnsupportedNormalizationException($normalization);
+        }
+
+        $matches = [];
+
+        if (isset($normalization->matches['method'])) {
+            $matches[] = new MethodMatch($normalization->matches['method']);
+        }
+
+        if (isset($normalization->matches['uri'])) {
+            $matches[] = new UriMatch($normalization->matches['uri']);
+        }
+
+        return new Compilation(
+            new Resolution(
+                $normalization->key,
+                $matches
+            )
+        );
+    }
+}

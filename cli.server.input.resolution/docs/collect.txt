@@ -1,0 +1,4 @@
+Se crean matches con un id
+Tambien se crean controladores para esos id
+Cuando se machea un request, se puede buscar el controlador para dicho id (collector->first)
+Tambien se puede aplicar esta tecnica para firewall, buscandos todos los firewalls con esos ids (collector->all)
