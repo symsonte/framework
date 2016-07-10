@@ -12,9 +12,9 @@ class ScalarProcessor implements Processor
     /**
      * @param ScalarArgument $argument
      *
-     * @return object
-     *
      * @throws UnsupportedArgumentException if the argument is not supported.
+     *
+     * @return object
      */
     public function process($argument)
     {

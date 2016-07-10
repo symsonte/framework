@@ -15,7 +15,7 @@ class DelegatorSliceReader implements SliceReader
     /**
      * @param SliceReader[] $sliceReaders
      */
-    function __construct($sliceReaders = [])
+    public function __construct($sliceReaders = [])
     {
         $this->sliceReaders = $sliceReaders;
     }

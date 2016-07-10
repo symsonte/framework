@@ -12,7 +12,7 @@ class UriMatch
     /**
      * @param string $pattern
      */
-    function __construct($pattern)
+    public function __construct($pattern)
     {
         $this->pattern = $pattern;
     }

@@ -15,11 +15,11 @@ class UnsupportedSliceIteratorException extends \InvalidArgumentException
     /**
      * @param mixed $iterator
      */
-    function __construct($iterator)
+    public function __construct($iterator)
     {
         $this->iterator = $iterator;
 
-        parent::__construct(sprintf("Iterator %s is not supported.", serialize($iterator)));
+        parent::__construct(sprintf('Iterator %s is not supported.', serialize($iterator)));
     }
 
     /**

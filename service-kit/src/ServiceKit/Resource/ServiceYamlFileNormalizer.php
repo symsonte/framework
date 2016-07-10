@@ -41,6 +41,7 @@ class ServiceYamlFileNormalizer implements Normalizer
         $declaration->disposable = isset($data['value']['disposable']) ? $data['value']['disposable'] : false;
         $declaration->lazy = isset($data['value']['lazy']) ? $data['value']['lazy'] : false;
         $declaration->tags = isset($data['value']['tags']) ? $data['value']['tags'] : [];
+        $declaration->circularCalls = isset($data['value']['circularCalls']) ? $data['value']['circularCalls'] : [];
 
         return $declaration;
     }

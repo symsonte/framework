@@ -8,11 +8,15 @@ namespace Symsonte\Http\Server\Request\Resolution;
 interface Finder
 {
     /**
-     * @param $request
+     * @param string $method
+     * @param string $uri
+     * @param string $version
+     * @param array  $headers
+     * @param mixed  $body
      *
      * @return string|false The matched key or false.
      */
-    public function first($request);
+    public function first($method, $uri, $version, $headers, $body);
 
     /**
      * @param Bag $bag

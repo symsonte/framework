@@ -36,7 +36,7 @@ class FilesNormalizer implements Normalizer
      *     normalizers: '#symsonte.http.server.request.authorization.resource.file_normalizer'
      * })
      */
-    function __construct(array $normalizers)
+    public function __construct(array $normalizers)
     {
         $this->normalizer = new InternalFilesNormalizer($normalizers);
     }

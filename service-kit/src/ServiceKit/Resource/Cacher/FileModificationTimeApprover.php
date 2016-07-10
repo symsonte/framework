@@ -5,10 +5,10 @@ namespace Symsonte\ServiceKit\Resource\Cacher;
 use Symsonte\Resource\Cacher\Approver;
 use Symsonte\Resource\DelegatorNormalizer;
 use Symsonte\Resource\DelegatorSliceReader;
-use Symsonte\Resource\SliceReader;
-use Symsonte\Resource\Storer;
 use Symsonte\Resource\FileResource;
 use Symsonte\Resource\Normalizer;
+use Symsonte\Resource\SliceReader;
+use Symsonte\Resource\Storer;
 use Symsonte\Resource\UnsupportedResourceException;
 use Symsonte\ServiceKit\Resource\ImportsNormalization;
 
@@ -17,12 +17,12 @@ use Symsonte\ServiceKit\Resource\ImportsNormalization;
  *
  * @ds\service({
  *     private: true,
- *     tags: ['symsonte.resource.cacher.approver']
+ *     tags: ['symsonte.service_kit.resource.cacher.approver']
  * })
  *
  * @di\service({
  *     private: true,
- *     tags: ['symsonte.resource.cacher.approver']
+ *     tags: ['symsonte.service_kit.resource.cacher.approver']
  * })
  */
 class FileModificationTimeApprover implements Approver
@@ -48,13 +48,13 @@ class FileModificationTimeApprover implements Approver
      * @param Normalizer[]  $normalizers
      *
      * @ds\arguments({
-     *     storer:           '@symsonte.resource.filesystem_storer',
+     *     storer:           '@symsonte.service_kit.resource.filesystem_time_storer',
      *     fileSliceReaders: '#symsonte.resource.file_slice_reader',
      *     normalizers:      '#symsonte.service_kit.resource.normalizer'
      * })
      *
      * @di\arguments({
-     *     storer:           '@symsonte.resource.filesystem_storer',
+     *     storer:           '@symsonte.service_kit.resource.filesystem_time_storer',
      *     fileSliceReaders: '#symsonte.resource.file_slice_reader',
      *     normalizers:      '#symsonte.service_kit.resource.normalizer'
      * })
@@ -63,15 +63,14 @@ class FileModificationTimeApprover implements Approver
         Storer $storer,
         array $fileSliceReaders,
         array $normalizers
-    )
-    {
+    ) {
         $this->storer = $storer;
         $this->fileSliceReader = new DelegatorSliceReader($fileSliceReaders);
         $this->normalizer = new DelegatorNormalizer($normalizers);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add($resource)
     {
@@ -86,7 +85,7 @@ class FileModificationTimeApprover implements Approver
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function approve($resource)
     {
@@ -107,12 +106,12 @@ class FileModificationTimeApprover implements Approver
     {
         $iterator = $this->fileSliceReader->init($resource);
 
-        $times = array(
-            md5($resource->getFile()) => filemtime($resource->getFile())
-        );
+        $times = [
+            md5($resource->getFile()) => filemtime($resource->getFile()),
+        ];
         while ($data = $this->fileSliceReader->current($iterator)) {
             $definition = $this->normalizer->normalize($data, $resource);
-            
+
             if ($definition instanceof ImportsNormalization) {
                 $times = array_merge(
                     $times,

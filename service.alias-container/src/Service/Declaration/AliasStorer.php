@@ -15,7 +15,7 @@ class AliasStorer
     /**
      * @param string[] $aliases
      */
-    function __construct($aliases = [])
+    public function __construct($aliases = [])
     {
         $this->aliases = $aliases;
     }

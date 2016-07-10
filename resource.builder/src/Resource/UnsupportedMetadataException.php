@@ -20,7 +20,7 @@ class UnsupportedMetadataException extends \Exception
         $this->metadata = $metadata;
 
         parent::__construct(sprintf(
-            "Metadata %s unsupported.",
+            'Metadata %s unsupported.',
             serialize($metadata)
         ));
     }

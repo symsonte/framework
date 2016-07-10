@@ -2,15 +2,13 @@
 
 namespace Symsonte\Http\Server\Request\Resolution;
 
-use FastRoute\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
 use FastRoute\DataGenerator\GroupCountBased as GroupCountBasedDataGenerator;
-use FastRoute\RouteParser\Std;
-use Symsonte\Http\Server\GetRequest;
-use Symsonte\Http\Server\PostRequest;
-use Symsonte\Http\Server\Request\MethodMatch;
-use Symsonte\Http\Server\Request\Resolution;
-use Symsonte\Http\Server\Request\UriMatch;
+use FastRoute\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
 use FastRoute\RouteCollector;
+use FastRoute\RouteParser\Std;
+use Symsonte\Http\Server\Request\MethodMatch;
+use Symsonte\Http\Server\Request\UriMatch;
+use Zend\Diactoros\Uri;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -30,9 +28,7 @@ class NikicFastRouteFinder implements Finder
      */
     private $collector;
 
-    /**
-     */
-    function __construct()
+    public function __construct()
     {
         $this->collector = new RouteCollector(
             new Std(),
@@ -43,21 +39,13 @@ class NikicFastRouteFinder implements Finder
     /**
      * {@inheritdoc}
      */
-    public function first($request)
+    public function first($method, $uri, $version, $headers, $body)
     {
         $dispatcher = new GroupCountBasedDispatcher($this->collector->getData());
 
-        if ($request instanceof GetRequest) {
-            $method = 'GET';
-        } elseif ($request instanceof PostRequest) {
-            $method = 'POST';
-        } else {
-            throw new \InvalidArgumentException();
-        }
-        $uri = $request->getUri();
-        $uri = str_replace('?XDEBUG_SESSION_START=phpstorm', '', $uri);
+        $uri = new Uri($uri);
 
-        return $dispatcher->dispatch($method, $uri);
+        return $dispatcher->dispatch($method, $uri->getPath());
     }
 
     /**
@@ -66,10 +54,10 @@ class NikicFastRouteFinder implements Finder
     public function merge(Bag $bag)
     {
         foreach ($bag->all() as $resolution) {
-            $method = 'GET';
+            $methods = ['GET'];
             foreach ($resolution->getMatches() as $match) {
                 if ($match instanceof MethodMatch) {
-                    $method = $match->getMethod();
+                    $methods = $match->getMethods();
 
                     break;
                 }
@@ -82,11 +70,13 @@ class NikicFastRouteFinder implements Finder
                 }
             }
 
-            $this->collector->addRoute(
-                $method,
-                $pattern,
-                $resolution->getKey()
-            );
+            foreach ($methods as $method) {
+                $this->collector->addRoute(
+                    $method,
+                    $pattern,
+                    $resolution->getKey()
+                );
+            }
         }
     }
 }

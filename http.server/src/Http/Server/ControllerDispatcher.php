@@ -2,30 +2,27 @@
 
 namespace Symsonte\Http\Server;
 
+use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
 use Symsonte\Http\Server;
-use Symsonte\Http\Server\PostRequest;
+use Symsonte\Http\Server\Request\Authentication\Credential\AuthorizationResolver;
+use Symsonte\Http\Server\Request\Authentication\Credential\InvalidDataException;
+use Symsonte\Http\Server\Request\Authentication\Credential\Processor as CredentialProcessor;
+use Symsonte\Http\Server\Request\Authorization\Checker;
+use Symsonte\Http\Server\Request\Authorization\Role\Collector as RoleCollector;
+use Symsonte\Http\Server\Request\Resolution\Finder;
 use Symsonte\Resource\Builder;
+use Symsonte\Resource\DelegatorBuilder;
 use Symsonte\Service\CachedInstantiator;
 use Symsonte\Service\ConstructorInstantiator;
 use Symsonte\Service\Container;
-use Symsonte\Service\Declaration;
-use Symsonte\Service\DeductibleContainer;
-use Symsonte\Service\OrdinaryContainer;
-use Symsonte\ServiceKit\Resource\Loader;
 use Symsonte\Service\Declaration\Argument\ServiceProcessor as ServiceArgumentProcessor;
 use Symsonte\Service\Declaration\Call\Processor as CallProcessor;
-use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
-use Symsonte\Http\Server\Request\Resolution\Finder;
-use Symsonte\ServiceKit\Declaration\Bag;
-use Symsonte\Service\Declaration\Storer;
-use Symsonte\Service\Declaration\Call;
 use Symsonte\Service\Declaration\IdStorer;
-use Symsonte\Http\Server\Request\Authorization\Checker;
-use Symsonte\Http\Server\Request\Authentication\Credential\Resolver as CredentialResolver;
-use Symsonte\Http\Server\Request\Authentication\Credential\Processor as CredentialProcessor;
-use Symsonte\Http\Server\Request\Authorization\Role\Collector as RoleCollector;
-use Symsonte\Http\Server\Request\Authentication\Credential\UnresolvableException;
-use Symsonte\Http\Server\Request\Authentication\Credential\InvalidDataException;
+use Symsonte\Service\Declaration\Storer;
+use Symsonte\Service\DeductibleContainer;
+use Symsonte\Service\OrdinaryContainer;
+use Symsonte\ServiceKit\Declaration\Bag;
+use Symsonte\ServiceKit\Resource\Loader;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -36,6 +33,11 @@ class ControllerDispatcher
      * @var Loader
      */
     private $resourceLoader;
+
+    /**
+     * @var Builder
+     */
+    private $resourceBuilder;
 
     /**
      * @var Container
@@ -53,17 +55,17 @@ class ControllerDispatcher
     private $authorizationChecker;
 
     /**
-     * @var CredentialResolver
+     * @var AuthorizationResolver
      */
-    private $credentialResolver;
+    private $authorizationResolver;
 
     /**
-     * @var CredentialProcessor
+     * @var CredentialProcessor|null
      */
     private $credentialProcessor;
 
     /**
-     * @var RoleCollector
+     * @var RoleCollector|null
      */
     private $roleCollector;
     /**
@@ -72,121 +74,104 @@ class ControllerDispatcher
     private $server;
 
     /**
-     * @param Loader              $resourceLoader
-     * @param Container           $serviceContainer
-     * @param Finder              $controllerFinder
-     * @param Checker             $authorizationChecker
-     * @param CredentialResolver  $credentialResolver
-     * @param CredentialProcessor $credentialProcessor
-     * @param RoleCollector       $roleCollector
-     * @param Server              $server
+     * @param Loader                   $resourceLoader
+     * @param Builder[]                $resourceBuilders
+     * @param Container                $serviceContainer
+     * @param Finder                   $controllerFinder
+     * @param Checker                  $authorizationChecker
+     * @param AuthorizationResolver    $authorizationResolver
+     * @param CredentialProcessor|null $credentialProcessor
+     * @param RoleCollector|null       $roleCollector
+     * @param Server                   $server
      */
-    function __construct(
+    public function __construct(
         Loader $resourceLoader,
+        array $resourceBuilders,
         Container $serviceContainer,
         Finder $controllerFinder,
         Checker $authorizationChecker,
-        CredentialResolver $credentialResolver,
-        CredentialProcessor $credentialProcessor,
-        RoleCollector $roleCollector,
+        AuthorizationResolver $authorizationResolver,
+        CredentialProcessor $credentialProcessor = null,
+        RoleCollector $roleCollector = null,
         Server $server
-    )
-    {
+    ) {
         $this->resourceLoader = $resourceLoader;
+        $this->resourceBuilder = new DelegatorBuilder($resourceBuilders);
         $this->serviceContainer = $serviceContainer;
         $this->controllerFinder = $controllerFinder;
         $this->authorizationChecker = $authorizationChecker;
-        $this->credentialResolver = $credentialResolver;
+        $this->authorizationResolver = $authorizationResolver;
         $this->credentialProcessor = $credentialProcessor;
         $this->roleCollector = $roleCollector;
         $this->server = $server;
     }
 
-    /**
-     */
     public function dispatch()
     {
-        $request = $this->server->resolveRequest();
+        $method = $this->server->resolveMethod();
+        $uri = $this->server->resolveUri();
+        $version = $this->server->resolveVersion();
+        $headers = $this->server->resolveHeaders();
+        $body = $this->server->resolveBody();
 
-        if ($request instanceof OptionsRequest) {
-            $this->server->sendResponse(new OrdinaryResponse());
+        if ($method == 'OPTIONS') {
+            $this->server->sendResponse();
 
             return;
         }
 
-        $info = $this->controllerFinder->first($request);
+        $info = $this->controllerFinder->first($method, $uri, $version, $headers, $body);
+
+        if (!isset($info[1])) {
+            $this->server->sendResponse(null, 404);
+
+            return;
+        }
+
         $controller = $info[1];
+        $variables = [];
         if (isset($info[2])) {
             $variables = $info[2];
         }
 
         // Does the controller require authorization?
         if ($this->authorizationChecker->has($controller) === true) {
-            // Resolve the credential the user sent
-            try {
-                $credential = $this->credentialResolver->resolve();
-            } catch (UnresolvableException $e) {
-                $this->server->sendResponse(new OrdinaryResponse(
-                    null,
-                    OrdinaryResponse::HTTP_FORBIDDEN
-                ));
-
-                return;
-            }
-
             // Process the credential
             try {
-                $token = $this->credentialProcessor->process($credential);
+                $uniqueness = $this->credentialProcessor->process();
             } catch (InvalidDataException $e) {
-                $this->server->sendResponse(new OrdinaryResponse(
-                    null,
-                    OrdinaryResponse::HTTP_UNAUTHORIZED
-                ));
+                $this->server->sendResponse(null, 401);
 
                 return;
             }
 
             // Get the user roles
-            $roles = $this->roleCollector->collect($token);
+            $roles = $this->roleCollector->collect($uniqueness);
             // Doesn't the user have the correct role for the current controller?
             if ($this->authorizationChecker->check($controller, $roles) === false) {
-                $this->server->sendResponse(new OrdinaryResponse(
+                $this->server->sendResponse(
                     null,
-                    OrdinaryResponse::HTTP_UNAUTHORIZED
-                ));
+                    401
+                );
 
                 return;
             }
         }
 
+        list($controller, $method) = explode(':', $controller);
         $controller = $this->createContainer()->get($controller);
-
-        $method = new \ReflectionMethod($controller, '__invoke');
-        $parameters = $method->getParameters();
+        $reflectionMethod = new \ReflectionMethod($controller, $method);
+        $parameters = $reflectionMethod->getParameters();
         $artificialParameters = [];
         foreach ($parameters as $parameter) {
-            if ($parameter->getName() == 'token') {
-                $artificialParameters['token'] = $token;
-            } elseif ($parameter->getName() == 'request') {
-                $artificialParameters['request'] = $request;
+            if ($parameter->getName() == 'uniqueness' && isset($uniqueness)) {
+                $artificialParameters['uniqueness'] = $uniqueness;
             } elseif (array_key_exists($parameter->getName(), $variables)) {
                 $artificialParameters[$parameter->getName()] = $variables[$parameter->getName()];
             }
         }
 
-        /** @var OrdinaryResponse $response */
-        $response = call_user_func_array([$controller, '__invoke'], $artificialParameters);
-
-        $this->server->sendResponse(new OrdinaryResponse(
-            $response->getContent(),
-            $response->getStatus(),
-            array_merge(
-                $response->getHeaders(),
-                [
-                    'Access-Control-Allow-Origin' => '*'
-                ]
-            )
-        ));
+        call_user_func_array([$controller, $method], $artificialParameters);
     }
 
     /**
@@ -194,14 +179,14 @@ class ControllerDispatcher
      */
     private function createContainer()
     {
-        $bag = $this->resourceLoader->load([
-            'dir' => sprintf("%s/../../../../../../../http", __DIR__),
+        $bag = $this->resourceLoader->load($this->resourceBuilder->build([
+            'dir'    => sprintf('%s/../../../../../../../http', __DIR__),
             'filter' => '*.php',
-            'extra' => [
-                'type' => 'annotation',
-                'annotation' => '/^di\\\\controller/'
-            ]
-        ]);
+            'extra'  => [
+                'type'       => 'annotation',
+                'annotation' => '/^di\\\\controller/',
+            ],
+        ]));
 
         $declarationStorer = $this->createDeclarationStorer($bag);
         $argumentProcessor = new ServiceArgumentProcessor();

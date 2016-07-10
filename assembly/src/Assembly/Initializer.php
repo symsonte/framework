@@ -23,13 +23,11 @@ class Initializer
      *     connector: '@symsonte.assembly.connector'
      * })
      */
-    function __construct(Connector $connector)
+    public function __construct(Connector $connector)
     {
         $this->connector = $connector;
     }
 
-    /**
-     */
     public function init()
     {
         $this->connector->connect();

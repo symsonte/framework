@@ -2,8 +2,6 @@
 
 namespace Symsonte\Http\Server\Request;
 
-use Symsonte\Http\Server\PostRequest;
-
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  *
@@ -30,7 +28,7 @@ class UriPregMatcher implements Matcher
 
         return (bool) preg_match(
             sprintf(
-                "/%s/",
+                '/%s/',
                 str_replace('/', '\/', $match->getPattern())
             ),
             $request->getUri()

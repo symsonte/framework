@@ -21,7 +21,7 @@ class SetupInstallNotifier
      * @param Installer[]|null $installers
      *
      * @ds\arguments({
-     *     connector: '#symsonte.service_kit.setup_install'
+     *     installers: '#symsonte.service_kit.setup_install'
      * })
      */
     public function __construct(array $installers = null)
@@ -34,10 +34,10 @@ class SetupInstallNotifier
      *
      * @return Bag
      */
-    public function start(Bag $bag)
+    public function install(Bag $bag)
     {
-        foreach ($this->installers as $initializer) {
-            $bag = $initializer->install($bag);
+        foreach ($this->installers as $installer) {
+            $bag = $installer->install($bag);
         }
 
         return $bag;

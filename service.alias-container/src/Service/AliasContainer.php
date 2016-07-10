@@ -23,11 +23,10 @@ class AliasContainer implements Container
      * @param AliasStorer $storer
      * @param Container   $container
      */
-    function __construct(
+    public function __construct(
         AliasStorer $storer,
         Container $container
-    )
-    {
+    ) {
         $this->storer = $storer;
         $this->container = $container;
     }

@@ -1,3 +1,16 @@
+1. Cada clase q necesita cosas se le inyecta
+2. Para usar la clase no se instancia, sino q se usa un service container
+
+
+
+
+
+
+
+
+
+
+
 A vendor has classes (services).
 
 Symsonte gives a way to load those services using dependency injection.

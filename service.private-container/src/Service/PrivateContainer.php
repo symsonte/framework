@@ -21,11 +21,10 @@ class PrivateContainer implements Container
      * @param Container $container
      * @param IdStorer  $storer
      */
-    function __construct(
+    public function __construct(
         Container $container,
         IdStorer $storer
-    )
-    {
+    ) {
         $this->container = $container;
         $this->storer = $storer;
     }

@@ -23,9 +23,9 @@ class AliasesCompiler implements Compiler
     /**
      * @param AliasesNormalization $normalization
      *
-     * @return AliasesCompilation
-     *
      * @throws UnsupportedNormalizationException
+     *
+     * @return AliasesCompilation
      */
     public function compile($normalization)
     {

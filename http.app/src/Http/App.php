@@ -20,10 +20,10 @@ class App
         $this->serviceContainer = $serviceContainer;
     }
 
-    public function execute()
+    public function execute($controller)
     {
         /** @var ControllerDispatcher $dispatcher */
-        $dispatcher = $this->serviceContainer->get('airsol.http.server.controller_dispatcher');
+        $dispatcher = $this->serviceContainer->get($controller);
         $dispatcher->dispatch();
     }
 }

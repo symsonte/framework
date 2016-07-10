@@ -3,7 +3,7 @@
 namespace Symsonte\Http\Server\Request\Authentication\Credential;
 
 use Symsonte\Http\Server;
-use Symsonte\Http\Server\Request\Authentication\Credential;
+use Symsonte\Http\Server\Request\Authentication\BasicCredential;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -16,7 +16,7 @@ use Symsonte\Http\Server\Request\Authentication\Credential;
  *     private: true
  * })
  */
-class NginxBasicResolver implements Resolver
+class NginxBasicResolver
 {
     /**
      * @var Server
@@ -24,7 +24,7 @@ class NginxBasicResolver implements Resolver
     private $server;
 
     /**
-     * @var Credential
+     * @var BasicCredential
      */
     private $credential;
 
@@ -45,7 +45,9 @@ class NginxBasicResolver implements Resolver
     }
 
     /**
-     * {@inheritdoc}
+     * @throws UnresolvableException
+     *
+     * @return BasicCredential
      */
     public function resolve()
     {
@@ -53,18 +55,18 @@ class NginxBasicResolver implements Resolver
             return $this->credential;
         }
 
-        $request = $this->server->resolveRequest();
+        $headers = $this->server->resolveHeaders();
 
         if (
-            $request->hasHeader('PHP_AUTH_USER') === false
-            || $request->hasHeader('PHP_AUTH_PW') === false
+            isset($headers['PHP_AUTH_USER'])
+            || isset($headers['PHP_AUTH_PW'])
         ) {
             throw new UnresolvableException();
         }
 
-        $credential = new Credential(
-            $request->getHeader('PHP_AUTH_USER'),
-            $request->getHeader('PHP_AUTH_PW')
+        $credential = new BasicCredential(
+            $headers['PHP_AUTH_USER'],
+            $headers['PHP_AUTH_PW']
         );
 
         return $credential;

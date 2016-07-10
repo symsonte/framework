@@ -3,10 +3,9 @@
 namespace Symsonte\ServiceKit\Resource\Cacher;
 
 use Symsonte\Resource\Cacher\Approver;
-use Symsonte\Resource\DirSliceReader;
-use Symsonte\Resource\Builder;
-use Symsonte\Resource\Storer;
 use Symsonte\Resource\DirResource;
+use Symsonte\Resource\DirSliceReader;
+use Symsonte\Resource\Storer;
 use Symsonte\Resource\UnsupportedResourceException;
 
 /**
@@ -14,12 +13,12 @@ use Symsonte\Resource\UnsupportedResourceException;
  *
  * @ds\service({
  *     private: true,
- *     tags: ['symsonte.resource.cacher.approver']
+ *     tags: ['symsonte.service_kit.resource.cacher.approver']
  * })
  *
  * @di\service({
  *     private: true,
- *     tags: ['symsonte.resource.cacher.approver']
+ *     tags: ['symsonte.service_kit.resource.cacher.approver']
  * })
  */
 class DirModificationTimeApprover implements Approver
@@ -46,13 +45,13 @@ class DirModificationTimeApprover implements Approver
      *
      * @ds\arguments({
      *     reader:   '@symsonte.resource.dir_slice_reader',
-     *     storer:   '@symsonte.resource.filesystem_storer',
+     *     storer:   '@symsonte.service_kit.resource.filesystem_time_storer',
      *     approver: '@symsonte.service_kit.resource.cacher.file_modification_time_approver'
      * })
      *
      * @di\arguments({
      *     reader:   '@symsonte.resource.dir_slice_reader',
-     *     storer:   '@symsonte.resource.filesystem_storer',
+     *     storer:   '@symsonte.service_kit.resource.filesystem_time_storer',
      *     approver: '@symsonte.service_kit.resource.cacher.file_modification_time_approver'
      * })
      */
@@ -60,8 +59,7 @@ class DirModificationTimeApprover implements Approver
         DirSliceReader $reader,
         Storer $storer,
         FileModificationTimeApprover $approver
-    )
-    {
+    ) {
         $this->reader = $reader;
         $this->storer = $storer;
         $this->approver = $approver;
@@ -92,6 +90,8 @@ class DirModificationTimeApprover implements Approver
         if (!$resource instanceof DirResource) {
             throw new UnsupportedResourceException($resource);
         }
+
+        // TODO: Implement a workaround for empty dirs
 
         $iterator = $this->reader->init($resource);
         while ($fileResource = $this->reader->current($iterator)) {

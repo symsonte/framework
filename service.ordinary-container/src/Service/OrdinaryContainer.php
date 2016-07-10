@@ -28,11 +28,10 @@ class OrdinaryContainer implements Container
      * @param Storer       $storer
      * @param Instantiator $instantiator
      */
-    function __construct(
+    public function __construct(
         Storer $storer,
         Instantiator $instantiator
-    )
-    {
+    ) {
         $this->storer = $storer;
         $this->instantiator = $instantiator;
     }
@@ -57,7 +56,7 @@ class OrdinaryContainer implements Container
         if (isset($this->instantiating[$id])) {
             throw new NonInstantiableServiceException(
                 $id,
-                sprintf("Circular reference instantiating the service \"%s\".", $id)
+                sprintf('Circular reference instantiating the service "%s".', $id)
             );
         }
 

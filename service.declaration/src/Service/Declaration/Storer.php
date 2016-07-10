@@ -2,7 +2,6 @@
 
 namespace Symsonte\Service\Declaration;
 
-use Symsonte\Service\ConstructorDeclaration;
 use Symsonte\Service\Declaration;
 
 /**
@@ -18,7 +17,7 @@ class Storer
     /**
      * @param Declaration[] $declarations
      */
-    function __construct($declarations = [])
+    public function __construct($declarations = [])
     {
         $this->declarations = $declarations;
     }
@@ -50,9 +49,9 @@ class Storer
      *
      * @param $id
      *
-     * @return ConstructorDeclaration
-     *
      * @throws NonexistentDeclarationException if declaration does not exist
+     *
+     * @return Declaration
      */
     public function get($id)
     {

@@ -21,9 +21,9 @@ interface Instantiator
      *
      * @param Declaration $declaration
      *
-     * @return object
-     *
      * @throws UnsupportedDeclarationException if declaration is not supported
+     *
+     * @return object
      */
     public function instantiate($declaration);
 }

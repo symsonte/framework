@@ -17,7 +17,7 @@ class Bag
     /**
      * @param Resolution[]|null $resolutions
      */
-    function __construct($resolutions = [])
+    public function __construct($resolutions = [])
     {
         $this->resolutions = $resolutions;
     }

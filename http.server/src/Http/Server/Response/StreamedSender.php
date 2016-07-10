@@ -2,8 +2,6 @@
 
 namespace Symsonte\Http\Server\Response;
 
-use Symsonte\Http\Server\StreamedResponse;
-
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  *
@@ -13,25 +11,22 @@ use Symsonte\Http\Server\StreamedResponse;
  */
 class StreamedSender implements Sender
 {
-    public function support($response)
-    {
-        return $response instanceof StreamedResponse;
-    }
-
     /**
-     * @param \Symsonte\Http\Server\StreamedResponse $response
+     * {@inheritdoc}
      */
-    public function send($response)
+    public function send($status, $headers, $body)
     {
-        $this->sendHeaders($response->getHeaders());
+        http_response_code($status);
 
-        call_user_func($response->getContentCallback());
+        $this->sendHeaders($headers);
+
+        call_user_func($body);
     }
 
     private function sendHeaders($headers)
     {
         foreach ($headers as $key => $value) {
-            header(sprintf("%s: %s", $key, $value), false);
+            header(sprintf('%s: %s', $key, $value), false);
         }
     }
 }

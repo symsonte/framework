@@ -2,95 +2,38 @@
 
 namespace Symsonte\Http\Server\Request;
 
-use Symsonte\Http\Server\GetRequest;
-use Symsonte\Http\Server\OptionsRequest;
-use Symsonte\Http\Server\PostRequest;
-use Symsonte\Http\Server\PostRequest\StringField;
-use Symsonte\Http\Server\PostRequest\FileField;
-
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
- *
- * @ds\service({
- *     private: true
- * })
- *
- * @di\service({
- *     private: true
- * })
  */
-class Resolver
+interface Resolver
 {
     /**
-     * @var GetRequest|PostRequest
+     * @return string
      */
-    private $request;
+    public function resolveMethod();
 
     /**
-     * @return GetRequest|PostRequest
+     * @return string
      */
-    public function resolve()
-    {
-        if (isset($this->request)) {
-            return $this->request;
-        }
+    public function resolveUri();
 
-        $uri = $_SERVER['REQUEST_URI'];
+    /**
+     * @return string
+     */
+    public function resolveVersion();
 
-        if (array_key_exists('HTTP_CONTENT_TYPE', $_SERVER)) {
-            $_SERVER['CONTENT_TYPE'] = $_SERVER['HTTP_CONTENT_TYPE'];
-        }
-        $headers = $_SERVER;
+    /**
+     * @return array
+     */
+    public function resolveHeaders();
 
-        switch ($_SERVER['REQUEST_METHOD']) {
-            case 'OPTIONS':
-                $request = new OptionsRequest(
-                    $uri,
-                    $headers
-                );
+    /**
+     * @return mixed
+     */
+    public function resolveBody();
 
-                break;
-            case 'GET':
-                $request = new GetRequest(
-                    $uri,
-                    $headers
-                );
-
-                break;
-            case 'POST':
-                $fields = [];
-
-                $request = new PostRequest(
-                    $uri,
-                    $headers,
-                    $fields,
-                    file_get_contents("php://input")
-                );
-
-                foreach ($_POST as $key => $value) {
-                    $request->addField(new StringField(
-                        $key,
-                        $value
-                    ));
-                }
-
-                foreach ($_FILES as $key => $value) {
-                    $request->addField(new FileField(
-                        $key,
-                        new \SplFileObject($value['tmp_name']),
-                        $value['name'],
-                        $value['mime'],
-                        $value['size']
-                    ));
-                }
-
-                break;
-            default:
-                throw new \InvalidArgumentException(sprintf("Method %s not implemented yet.", $_SERVER['REQUEST_METHOD']));
-        }
-
-        $this->request = $request;
-
-        return $request;
-    }
+    /**
+     * @return mixed
+     */
+    public function resolveParsedBody();
 }

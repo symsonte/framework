@@ -5,23 +5,23 @@ namespace Symsonte\Http\Server\Request;
 class MethodMatch
 {
     /**
-     * @var string
+     * @var string[]
      */
-    private $method;
+    private $methods;
 
     /**
-     * @param string $method
+     * @param string[] $methods
      */
-    function __construct($method)
+    public function __construct(array $methods)
     {
-        $this->method = $method;
+        $this->methods = $methods;
     }
 
     /**
      * @return string
      */
-    public function getMethod()
+    public function getMethods()
     {
-        return strtoupper($this->method);
+        return array_map('strtoupper', $this->methods);
     }
 }

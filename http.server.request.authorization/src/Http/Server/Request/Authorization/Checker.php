@@ -20,9 +20,7 @@ class Checker
      */
     private $bag;
 
-    /**
-     */
-    function __construct()
+    public function __construct()
     {
         $this->bag = new Bag();
     }

@@ -4,9 +4,12 @@ namespace Symsonte\Service\Declaration\Argument;
 
 use Symsonte\Service\Container;
 use Symsonte\Service\Declaration\ServiceArgument;
+use Symsonte\Service\NonexistentServiceException;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
+ *
+ * @ds\service({tags: ['symsonte.service.declaration.argument.processor']})
  */
 class ServiceProcessor implements Processor
 {
@@ -26,9 +29,9 @@ class ServiceProcessor implements Processor
     /**
      * @param ServiceArgument $argument
      *
-     * @return object
-     *
      * @throws UnsupportedArgumentException if the argument is not supported.
+     *
+     * @return object
      */
     public function process($argument)
     {
@@ -36,7 +39,15 @@ class ServiceProcessor implements Processor
             throw new UnsupportedArgumentException($argument);
         }
 
-        return $this->container->get($argument->getId());
+        try {
+            return $this->container->get($argument->getId());
+        } catch (NonexistentServiceException $e) {
+            if (strpos($argument->getId(), '?') === 0) {
+                return;
+            }
+
+            throw $e;
+        }
     }
 
     /**

@@ -44,7 +44,7 @@ class FilesystemStorer implements Storer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add($data, $resource)
     {
@@ -54,7 +54,7 @@ class FilesystemStorer implements Storer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function has($resource)
     {
@@ -64,7 +64,7 @@ class FilesystemStorer implements Storer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($resource)
     {
@@ -76,17 +76,17 @@ class FilesystemStorer implements Storer
     /**
      * Generates a filename using dir and given resource.
      *
-     * @param  mixed $resource
+     * @param mixed $resource
      *
      * @return string
      */
     private function generateFilename($resource)
     {
         return sprintf(
-            "%s/%s%s",
+            '%s/%s%s',
             $this->dir,
             md5(serialize($resource)),
-            !is_null($this->unique) ? sprintf(".%s", $this->unique) : ''
+            !is_null($this->unique) ? sprintf('.%s', $this->unique) : ''
         );
     }
 }

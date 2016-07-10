@@ -17,7 +17,7 @@ class InvalidResourceException extends \InvalidArgumentException
      *
      * {@inheritdoc}
      */
-    function __construct($resource, $message = null, $code = null, $previous = null)
+    public function __construct($resource, $message = null, $code = null, $previous = null)
     {
         $this->resource = $resource;
 

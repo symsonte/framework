@@ -13,11 +13,18 @@ class ServiceArgument implements Argument
     private $id;
 
     /**
-     * @param string $id
+     * @var bool
      */
-    function __construct($id)
+    private $optional;
+
+    /**
+     * @param string $id
+     * @param bool   $optional
+     */
+    public function __construct($id, $optional = false)
     {
         $this->id = $id;
+        $this->optional = $optional;
     }
 
     /**
@@ -26,5 +33,13 @@ class ServiceArgument implements Argument
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOptional()
+    {
+        return $this->optional;
     }
 }

@@ -35,12 +35,11 @@ class CircularContainer implements Container
      * @param CallStorer    $callStorer
      * @param CallProcessor $callProcessor
      */
-    function __construct(
+    public function __construct(
         Container $container,
         CallStorer $callStorer,
         CallProcessor $callProcessor
-    )
-    {
+    ) {
         $this->container = $container;
         $this->callStorer = $callStorer;
         $this->callProcessor = $callProcessor;
@@ -61,17 +60,17 @@ class CircularContainer implements Container
     {
         $instance = $this->container->get($id);
 
-        $this->instantiated[$id] = true;
-
-        foreach ($this->callStorer->all() as $id => $calls) {
-            if (isset($this->instantiated[$id])) {
+        if (!isset($this->instantiated[$id])) {
+            foreach ($this->callStorer->all() as $internalId => $calls) {
                 try {
+                    $this->instantiated[$id] = true;
+
                     $this->callProcessor->process(
-                        $this->container->get($id),
+                        $this->container->get($internalId),
                         $calls
                     );
 
-                    $this->callStorer->remove($id);
+                    $this->callStorer->remove($internalId);
                 } catch (\Exception $e) {
                     continue;
                 }

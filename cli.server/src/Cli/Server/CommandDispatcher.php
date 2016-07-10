@@ -3,22 +3,21 @@
 namespace Symsonte\Cli\Server;
 
 use Symsonte\Cli\Server;
-use Symsonte\Resource\Builder;
+use Symsonte\Cli\Server\Input\Resolution\Finder;
+use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
 use Symsonte\Service\CachedInstantiator;
 use Symsonte\Service\ConstructorInstantiator;
 use Symsonte\Service\Container;
-use Symsonte\Service\Declaration;
-use Symsonte\Service\DeductibleContainer;
-use Symsonte\Service\OrdinaryContainer;
-use Symsonte\ServiceKit\Resource\Loader;
 use Symsonte\Service\Declaration\Argument\ServiceProcessor as ServiceArgumentProcessor;
 use Symsonte\Service\Declaration\Call\Processor as CallProcessor;
-use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
-use Symsonte\Cli\Server\Input\Resolution\Finder;
-use Symsonte\ServiceKit\Declaration\Bag;
-use Symsonte\Service\Declaration\Storer;
-use Symsonte\Service\Declaration\Call;
 use Symsonte\Service\Declaration\IdStorer;
+use Symsonte\Service\Declaration\Storer;
+use Symsonte\Service\DeductibleContainer;
+use Symsonte\Service\OrdinaryContainer;
+use Symsonte\ServiceKit\Declaration\Bag;
+use Symsonte\ServiceKit\Resource\Loader;
+use Symsonte\Resource\Builder;
+use Symsonte\Resource\DelegatorBuilder;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -29,6 +28,11 @@ class CommandDispatcher
      * @var Loader
      */
     private $resourceLoader;
+
+    /**
+     * @var Builder
+     */
+    private $resourceBuilder;
 
     /**
      * @var Container
@@ -46,34 +50,37 @@ class CommandDispatcher
     private $server;
 
     /**
-     * @param Loader              $resourceLoader
-     * @param Container           $serviceContainer
-     * @param Finder              $commandFinder
-     * @param Server              $server
+     * @param Loader    $resourceLoader
+     * @param Builder[] $resourceBuilders
+     * @param Container $serviceContainer
+     * @param Finder    $commandFinder
+     * @param Server    $server
      */
-    function __construct(
+    public function __construct(
         Loader $resourceLoader,
+        array $resourceBuilders,
         Container $serviceContainer,
         Finder $commandFinder,
         Server $server
-    )
-    {
+    ) {
         $this->resourceLoader = $resourceLoader;
+        $this->resourceBuilder = new DelegatorBuilder($resourceBuilders);
         $this->serviceContainer = $serviceContainer;
         $this->commandFinder = $commandFinder;
         $this->server = $server;
     }
 
-    /**
-     */
     public function dispatch()
     {
         $input = $this->server->resolveInput();
 
         $command = $this->commandFinder->first($input);
+
+        list($command, $method) = explode(':', $command);
+
         $command = $this->createContainer()->get($command);
 
-        call_user_func_array([$command, '__invoke'], []);
+        call_user_func_array([$command, $method], []);
     }
 
     /**
@@ -81,14 +88,14 @@ class CommandDispatcher
      */
     private function createContainer()
     {
-        $bag = $this->resourceLoader->load([
-            'dir' => sprintf("%s/../../../../../../../cli", __DIR__),
+        $bag = $this->resourceLoader->load($this->resourceBuilder->build([
+            'dir'    => sprintf('%s/../../../../../../../cli', __DIR__),
             'filter' => '*.php',
-            'extra' => [
-                'type' => 'annotation',
-                'annotation' => '/^di\\\\command/'
-            ]
-        ]);
+            'extra'  => [
+                'type'       => 'annotation',
+                'annotation' => '/^di\\\\command/',
+            ],
+        ]));
 
         $declarationStorer = $this->createDeclarationStorer($bag);
         $argumentProcessor = new ServiceArgumentProcessor();

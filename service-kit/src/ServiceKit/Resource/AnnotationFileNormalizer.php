@@ -2,9 +2,9 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
+use Symsonte\Resource\AnnotationFileResource;
 use Symsonte\Resource\DelegatorNormalizer;
 use Symsonte\Resource\Normalizer;
-use Symsonte\Resource\AnnotationFileResource;
 use Symsonte\Resource\UnsupportedDataAndResourceException;
 
 /**
@@ -38,7 +38,7 @@ class AnnotationFileNormalizer implements Normalizer
      *     normalizers: '#symsonte.service.resource.annotation_file_normalizer',
      * })
      */
-    function __construct(array $normalizers = [])
+    public function __construct(array $normalizers = [])
     {
         $this->normalizer = new DelegatorNormalizer($normalizers);
     }

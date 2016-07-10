@@ -2,8 +2,8 @@
 
 namespace Symsonte\Cli\Server\Input\Resolution\Resource;
 
-use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\AnnotationFileResource;
+use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\UnsupportedDataAndResourceException;
 
 /**
@@ -30,7 +30,7 @@ class AnnotationFileNormalizer implements Normalizer
             throw new UnsupportedDataAndResourceException($data, $resource);
         }
 
-        $data = $data['value']['class'][0];
+        $data = $data['value'];
 
         // is the command the default value?
         if (count($data['value']) == 1
@@ -42,7 +42,7 @@ class AnnotationFileNormalizer implements Normalizer
 
         $normalization = new Normalization();
 
-        $normalization->key = $this->generateName($data['class']);
+        $normalization->key = $this->generateKey($data['metadata']['class'], $data['method']);
 
         if (isset($data['value']['command'])) {
             $normalization->matches['command'] = $data['value']['command'];
@@ -53,18 +53,22 @@ class AnnotationFileNormalizer implements Normalizer
 
     /**
      * @param string $class
+     * @param string $method
      *
      * @return string
      */
-    private function generateName($class)
+    private function generateKey($class, $method)
     {
-        return
+        return sprintf(
+            '%s:%s',
             strtolower(
                 strtr(
                     preg_replace('/(?<=[a-zA-Z0-9])[A-Z]/', '_\\0', $class),
                     '\\',
                     '.'
                 )
-            );
+            ),
+            $method
+        );
     }
 }

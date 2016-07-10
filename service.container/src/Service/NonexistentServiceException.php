@@ -15,11 +15,11 @@ class NonexistentServiceException extends \InvalidArgumentException
     /**
      * @param string $id
      */
-    function __construct($id)
+    public function __construct($id)
     {
         $this->$id = $id;
 
-        parent::__construct(sprintf("Service with id \"%s\" does not exist.", $id));
+        parent::__construct(sprintf('Service with id "%s" does not exist.', $id));
     }
 
     /**

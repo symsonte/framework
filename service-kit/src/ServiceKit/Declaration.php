@@ -3,12 +3,23 @@
 namespace Symsonte\ServiceKit;
 
 use Symsonte\Service\Declaration as InternalDeclaration;
+use Symsonte\Service\Declaration\Call;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  */
 class Declaration
 {
+    const IS_DEDUCTIBLE = true;
+    const IS_NOT_DEDUCTIBLE = false;
+    const IS_PRIVATE = true;
+    const IS_NOT_PRIVATE = false;
+    const IS_DISPOSABLE = true;
+    const IS_NOT_DISPOSABLE = false;
+    const WITHOUT_TAGS = [];
+    const WITHOUT_ALIASES = [];
+    const WITHOUT_CIRCULAR_CALLS = [];
+
     /**
      * @var InternalDeclaration
      */
@@ -40,12 +51,18 @@ class Declaration
     private $aliases;
 
     /**
+     * @var Call[]
+     */
+    private $circularCalls;
+
+    /**
      * @param InternalDeclaration $declaration
      * @param bool                $deductible
      * @param bool                $private
      * @param bool                $disposable
      * @param string[]            $tags
      * @param string[]            $aliases
+     * @param Call[]              $circularCalls
      */
     public function __construct(
         InternalDeclaration $declaration,
@@ -53,15 +70,16 @@ class Declaration
         $private,
         $disposable,
         array $tags,
-        array $aliases
-    )
-    {
+        array $aliases,
+        array $circularCalls
+    ) {
         $this->declaration = $declaration;
         $this->deductible = $deductible;
         $this->private = $private;
         $this->disposable = $disposable;
         $this->tags = $tags;
         $this->aliases = $aliases;
+        $this->circularCalls = $circularCalls;
     }
 
     /**
@@ -72,7 +90,7 @@ class Declaration
     public function is($id)
     {
         return $this->declaration->getId() === $id
-        || isset($this->aliases[$id]);
+        || isset($this->circularCalls[$id]);
     }
 
     /**
@@ -84,7 +102,7 @@ class Declaration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeductible()
     {
@@ -92,7 +110,7 @@ class Declaration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isPrivate()
     {
@@ -100,7 +118,7 @@ class Declaration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDisposable()
     {
@@ -121,5 +139,13 @@ class Declaration
     public function getAliases()
     {
         return $this->aliases;
+    }
+
+    /**
+     * @return Call[]
+     */
+    public function getCircularCalls()
+    {
+        return $this->circularCalls;
     }
 }

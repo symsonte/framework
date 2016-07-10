@@ -2,12 +2,12 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
-use Symsonte\Service\Declaration\Call;
 use Symsonte\Resource\Compiler;
-use Respect\Validation\Validator as V;
-use Symsonte\ServiceKit\Resource\Argument\Compiler as ArgumentCompiler;
-use Symsonte\Service\ConstructorDeclaration;
 use Symsonte\Resource\UnsupportedNormalizationException;
+//use Respect\Validation\Validator as V;
+use Symsonte\Service\ConstructorDeclaration;
+use Symsonte\Service\Declaration\Call;
+use Symsonte\ServiceKit\Resource\Argument\Compiler as ArgumentCompiler;
 use Symsonte\ServiceKit\Resource\Argument\DelegatorCompiler as DelegatorArgumentCompiler;
 
 /**
@@ -41,7 +41,7 @@ class ServiceCompiler implements Compiler
      *     argumentCompilers: '#symsonte.service_kit.resource.argument.compiler'
      * })
      */
-    function __construct(array $argumentCompilers)
+    public function __construct(array $argumentCompilers)
     {
         $this->argumentCompiler = new DelegatorArgumentCompiler($argumentCompilers);
     }
@@ -49,9 +49,9 @@ class ServiceCompiler implements Compiler
     /**
      * @param ServiceNormalization $normalization
      *
-     * @return ServiceCompilation
-     *
      * @throws UnsupportedNormalizationException
+     *
+     * @return ServiceCompilation
      */
     public function compile($normalization)
     {
@@ -78,6 +78,18 @@ class ServiceCompiler implements Compiler
             $calls[] = new Call($call['method'], $callArguments);
         }
 
+        $circularCalls = [];
+        foreach ($normalization->circularCalls as $call) {
+            $callArguments = [];
+            if (isset($call['arguments'])) {
+                foreach ($call['arguments'] as $argument) {
+                    $callArguments[] = $this->argumentCompiler->compile($argument);
+                }
+            }
+
+            $circularCalls[] = new Call($call['method'], $callArguments);
+        }
+
         return new ServiceCompilation(
             new ConstructorDeclaration(
                 $normalization->id,
@@ -89,7 +101,7 @@ class ServiceCompiler implements Compiler
             $normalization->private,
             $normalization->disposable,
             $normalization->tags,
-            $normalization->calls
+            $circularCalls
         );
     }
 
@@ -103,7 +115,7 @@ class ServiceCompiler implements Compiler
      */
     private function validate(ServiceNormalization $declaration)
     {
-//        V::key(
+        //        V::key(
 //            V::key('foo', v::intVal()),
 //            V::key('bar', v::stringType()),
 //            V::key('baz', v::boolType())

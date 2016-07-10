@@ -15,7 +15,7 @@ class ObjectArgument implements Argument
     /**
      * @param object $object
      */
-    function __construct($object)
+    public function __construct($object)
     {
         $this->object = $object;
     }

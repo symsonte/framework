@@ -18,7 +18,7 @@ class FileField implements Field
      * @param string         $key
      * @param \SplFileObject $value
      */
-    function __construct($key, \SplFileObject $value)
+    public function __construct($key, \SplFileObject $value)
     {
         $this->key = $key;
         $this->value = $value;

@@ -2,8 +2,8 @@
 
 namespace Symsonte\Http\Server\Request;
 
-use Symsonte\Http\Server\PostRequest;
 use Symsonte\Http\Server\GetRequest;
+use Symsonte\Http\Server\PostRequest;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -29,7 +29,7 @@ class MethodMatcher implements Matcher
             throw new UnsupportedMatchException($match);
         }
 
-        return 'GET' == $match->getMethod() && $request instanceof GetRequest
-            || 'POST' == $match->getMethod() && $request instanceof PostRequest;
+        return in_array('GET', $match->getMethods()) && $request instanceof GetRequest
+            || in_array('POST', $match->getMethods()) && $request instanceof PostRequest;
     }
 }

@@ -15,7 +15,7 @@ class TagStorer
     /**
      * @param array $ids
      */
-    function __construct($ids = [])
+    public function __construct($ids = [])
     {
         $this->ids = $ids;
     }
@@ -24,11 +24,12 @@ class TagStorer
      * Adds an id to a tag.
      *
      * @param string $id
+     * @param string $key
      * @param string $tag
      */
-    public function add($id, $tag)
+    public function add($id, $key, $tag)
     {
-        $this->ids[$tag][] = $id;
+        $this->ids[$tag][$key] = $id;
     }
 
     /**

@@ -20,16 +20,23 @@ class Bag
     private $parameters;
 
     /**
+     * @var object[]
+     */
+    private $objects;
+
+    /**
      * @param Declaration[]|null $declarations
      * @param string[]|null      $parameters
+     * @param object[]|null      $objects
      */
     public function __construct(
         array $declarations = null,
-        array $parameters = null
-    )
-    {
+        array $parameters = null,
+        array $objects = null
+    ) {
         $this->declarations = $declarations ?: [];
         $this->parameters = $parameters ?: [];
+        $this->objects = $objects ?: [];
     }
 
     /**
@@ -40,9 +47,30 @@ class Bag
         return $this->declarations;
     }
 
-    public function addDeclaration(Declaration $declaration)
+    /**
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function hasDeclaration($id)
     {
-        $this->declarations[$declaration->getDeclaration()->getId()] = $declaration;
+        return isset($this->declarations[$id]);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @throws \Exception
+     *
+     * @return Declaration
+     */
+    public function getDeclaration($id)
+    {
+        if (!$this->hasDeclaration($id)) {
+            throw new \Exception();
+        }
+
+        return $this->declarations[$id];
     }
 
     /**
@@ -54,47 +82,10 @@ class Bag
     }
 
     /**
-     * @param string $key
-     * @param string $value
+     * @return object[]
      */
-    public function addParameter($key, $value)
+    public function getObjects()
     {
-        $this->parameters[$key] = $value;
-    }
-
-    public function addAliases($aliases)
-    {
-        foreach ($aliases as $alias => $id) {
-            if (!isset($this->declarations[$id])) {
-                throw new \InvalidArgumentException();
-            }
-
-            $this->declarations[$id] = new Declaration(
-                $this->declarations[$id]->getDeclaration(),
-                $this->declarations[$id]->isDeductible(),
-                $this->declarations[$id]->isPrivate(),
-                $this->declarations[$id]->isDisposable(),
-                $this->declarations[$id]->getTags(),
-                array_merge(
-                    $this->declarations[$id]->getAliases(),
-                    [$alias]
-                )
-            );
-        }
-    }
-
-    /**
-     * @param Bag $bag
-     */
-    public function merge(Bag $bag)
-    {
-        $this->declarations = array_merge(
-            $this->declarations,
-            $bag->getDeclarations()
-        );
-
-//        foreach ($bag->getDeclarations() as $declaration) {
-//            $this->addDeclaration($declaration);
-//        }
+        return $this->objects;
     }
 }

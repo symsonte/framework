@@ -2,44 +2,55 @@
 
 namespace Symsonte\Http\Server\Request;
 
-use Symsonte\Http\Server;
-use Symsonte\Http\Server\PostRequest;
-use Symsonte\Http\Server\PostRequest\StringField;
-
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  *
  * @ds\service({
  *     private: true,
- *     tags: ['symsonte.http.server.request.modifier']
+ *     deductible: true,
+ *     tags: ['symsonte.http.server.request.body_modifier']
  * })
  *
  * @di\service({
  *     private: true,
- *     tags: ['symsonte.http.server.request.modifier']
+ *     deductible: true,
+ *     tags: ['symsonte.http.server.request.body_modifier']
  * })
  */
-class DecodeJsonBodyModifier implements Modifier
+class DecodeJsonBodyModifier implements BodyModifier
 {
+    /**
+     * @var HeaderSearcher
+     */
+    private $headerSearcher;
+
+    /**
+     * @param HeaderSearcher $headerSearcher
+     */
+    public function __construct(HeaderSearcher $headerSearcher)
+    {
+        $this->headerSearcher = $headerSearcher;
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function modify($request)
+    public function modify($method, $uri, $version, $headers, $body)
     {
         if (
-            $request instanceof PostRequest
-            && $request->hasHeader('CONTENT_TYPE')
-            && $request->getHeader('CONTENT_TYPE') == 'application/json'
+            $this->headerSearcher->has(
+                $headers,
+                HeaderSearcher::KEY_CONTENT_TYPE,
+                HeaderSearcher::VALUE_APPLICATION_JSON
+            )
         ) {
-            $content = json_decode($request->getBody(), true);
+            $decodedBody = json_decode($body, true);
 
             if (json_last_error() == JSON_ERROR_NONE) {
-                foreach ($content as $key => $value) {
-                    $request->addField(new StringField($key, $value));
-                }
+                $body = $decodedBody;
             }
         }
 
-        return $request;
+        return $body;
     }
 }

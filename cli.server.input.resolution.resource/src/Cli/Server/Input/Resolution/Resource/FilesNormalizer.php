@@ -36,7 +36,7 @@ class FilesNormalizer implements Normalizer
      *     normalizers: '#symsonte.cli.server.input.resolution.resource.file_normalizer'
      * })
      */
-    function __construct(array $normalizers)
+    public function __construct(array $normalizers)
     {
         $this->normalizer = new InternalFilesNormalizer($normalizers);
     }

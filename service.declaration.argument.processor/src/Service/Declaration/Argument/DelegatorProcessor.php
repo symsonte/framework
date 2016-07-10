@@ -15,7 +15,7 @@ class DelegatorProcessor implements Processor
     /**
      * @param Processor[] $processors
      */
-    function __construct($processors = [])
+    public function __construct($processors = [])
     {
         $this->processors = $processors;
     }

@@ -2,23 +2,27 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
+use Symsonte\Resource\Builder;
+use Symsonte\Resource\Compiler;
 use Symsonte\Resource\DelegatorBuilder;
+use Symsonte\Resource\DelegatorCompiler;
 use Symsonte\Resource\DelegatorNormalizer;
 use Symsonte\Resource\DelegatorSliceReader;
-use Symsonte\ServiceKit\Declaration\Bag;
-use Symsonte\Resource\Builder;
-use Symsonte\Resource\Cacher;
-use Symsonte\Resource\SliceReader;
-use Symsonte\Resource\Compiler;
 use Symsonte\Resource\Normalizer;
-use Symsonte\Resource\DelegatorCompiler;
+use Symsonte\Resource\SliceReader;
 use Symsonte\ServiceKit\Declaration;
+use Symsonte\ServiceKit\Declaration\Bag;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  *
- * @ds\service()
- * @di\service()
+ * @ds\service({
+ *     deductible: true
+ * })
+ *
+ * @di\service({
+ *     deductible: true
+ * })
  */
 class Loader
 {
@@ -43,23 +47,16 @@ class Loader
     private $compiler;
 
     /**
-     * @var Cacher
-     */
-    private $cacher;
-
-    /**
      * @param Builder[]     $builders
      * @param SliceReader[] $sliceReaders
      * @param Normalizer[]  $normalizers
      * @param Compiler[]    $compilers
-     * @param Cacher[]      $cacher
      *
      * @ds\arguments({
      *     builders:     '#symsonte.resource.builder',
      *     sliceReaders: '#symsonte.resource.slice_reader',
      *     normalizers:  '#symsonte.service_kit.resource.normalizer',
      *     compilers:    '#symsonte.service_kit.resource.compiler',
-     *     cacher:       '@symsonte.resource.ordinary_cacher'
      * })
      *
      * @di\arguments({
@@ -67,37 +64,27 @@ class Loader
      *     sliceReaders: '#symsonte.resource.slice_reader',
      *     normalizers:  '#symsonte.service_kit.resource.normalizer',
      *     compilers:    '#symsonte.service_kit.resource.compiler',
-     *     cacher:       '@symsonte.resource.ordinary_cacher'
      * })
      */
     public function __construct(
-        array $builders = [],
-        array $sliceReaders = [],
-        array $normalizers = [],
-        array $compilers = [],
-        $cacher
-    )
-    {
+        array $builders,
+        array $sliceReaders,
+        array $normalizers,
+        array $compilers
+    ) {
         $this->builder = new DelegatorBuilder($builders);
         $this->sliceReader = new DelegatorSliceReader($sliceReaders);
         $this->normalizer = new DelegatorNormalizer($normalizers);
         $this->compiler = new DelegatorCompiler($compilers);
-        $this->cacher = $cacher;
     }
 
     /**
-     * @param mixed $metadata
+     * @param mixed $resource
      *
      * @return Bag
      */
-    public function load($metadata)
+    public function load($resource)
     {
-        $resource = $this->builder->build($metadata);
-
-        if ($this->cacher->approve($resource)) {
-            return $this->cacher->retrieve($resource);
-        }
-
         $iterator = $this->sliceReader->init($resource);
 
         $bag = new Bag();
@@ -108,33 +95,67 @@ class Loader
             unset($normalization);
 
             if ($compilation instanceof ServiceCompilation) {
-                $bag->addDeclaration(
-                    new Declaration(
-                        $compilation->getDeclaration(),
-                        $compilation->isDeductible(),
-                        $compilation->isPrivate(),
-                        $compilation->isDisposable(),
-                        $compilation->getTags(),
-                        []
-                    )
+                $bag = new Bag(
+                    array_merge(
+                        $bag->getDeclarations(),
+                        [
+                            new Declaration(
+                                $compilation->getDeclaration(),
+                                $compilation->isDeductible(),
+                                $compilation->isPrivate(),
+                                $compilation->isDisposable(),
+                                $compilation->getTags(),
+                                [],
+                                $compilation->getCircularCalls()
+                            ),
+                        ]
+                    ),
+                    $bag->getParameters()
                 );
             } elseif ($compilation instanceof AliasesCompilation) {
-                $bag->addAliases(
-                    $compilation->getAliases()
+                $declarations = [];
+                foreach ($compilation->getAliases() as $alias => $id) {
+                    if (!$bag->hasDeclaration($id)) {
+                        throw new \InvalidArgumentException();
+                    }
+
+                    $declaration = $bag->getDeclaration($id);
+
+                    $declarations[$id] = new Declaration(
+                        $declaration->getDeclaration(),
+                        $declaration->isDeductible(),
+                        $declaration->isPrivate(),
+                        $declaration->isDisposable(),
+                        $declaration->getTags(),
+                        array_merge(
+                            $declaration->getAliases(),
+                            [$alias]
+                        ),
+                        $declaration->getCircularCalls()
+                    );
+                }
+
+                $bag = new Bag(
+                    array_merge(
+                        $bag->getDeclarations(),
+                        $declarations
+                    ),
+                    $bag->getParameters()
                 );
             } elseif ($compilation instanceof ImportsCompilation) {
-                $bag->merge(
-                    $this->load($compilation->getMetadata())
+                $resource = $this->builder->build($compilation->getMetadata());
+
+                $bag = new Bag(
+                    array_merge(
+                        $bag->getDeclarations(),
+                        $this->load($resource)->getDeclarations()
+                    ),
+                    $bag->getParameters()
                 );
             }
 
             $this->sliceReader->next($iterator);
         }
-
-        $this->cacher->store(
-            $bag,
-            $resource
-        );
 
         return $bag;
     }

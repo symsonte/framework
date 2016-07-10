@@ -7,6 +7,10 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  *
+ * @ds\service({
+ *     deductible: true
+ * })
+ *
  * @di\service({
  *     private: true,
  *     tags: ['symsonte.resource.flat_reader', 'symsonte.resource.file_flat_reader']

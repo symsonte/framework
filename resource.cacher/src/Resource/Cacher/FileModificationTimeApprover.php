@@ -2,19 +2,21 @@
 
 namespace Symsonte\Resource\Cacher;
 
-use Symsonte\Resource\DelegatorNormalizer;
-use Symsonte\Resource\DelegatorSliceReader;
-use Symsonte\Resource\SliceReader;
-use Symsonte\Resource\Storer;
 use Symsonte\Resource\FileResource;
-use Symsonte\Resource\Normalizer;
+use Symsonte\Resource\Storer;
 use Symsonte\Resource\UnsupportedResourceException;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  *
+ * @ds\service({
+ *     private: true,
+ *     tags: ['symsonte.resource.cacher.approver']
+ * })
+ *
  * @di\service({
- *     private: true
+ *     private: true,
+ *     tags: ['symsonte.resource.cacher.approver']
  * })
  */
 class FileModificationTimeApprover implements Approver
@@ -25,21 +27,24 @@ class FileModificationTimeApprover implements Approver
     private $storer;
 
     /**
-     * @param Storer        $storer
+     * @param Storer $storer
+     *
+     * @ds\arguments({
+     *     storer: '@symsonte.resource.filesystem_time_storer'
+     * })
      *
      * @di\arguments({
-     *     storer: '@symsonte.resource.filesystem_storer'
+     *     storer: '@symsonte.resource.filesystem_time_storer'
      * })
      */
     public function __construct(
         Storer $storer
-    )
-    {
+    ) {
         $this->storer = $storer;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add($resource)
     {
@@ -54,7 +59,7 @@ class FileModificationTimeApprover implements Approver
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function approve($resource)
     {

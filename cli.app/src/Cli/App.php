@@ -2,7 +2,7 @@
 
 namespace Symsonte\Cli;
 
-use Symsonte\Http\Server\ControllerDispatcher;
+use Symsonte\Cli\Server\CommandDispatcher;
 use Symsonte\Service\Container;
 
 class App
@@ -20,10 +20,10 @@ class App
         $this->serviceContainer = $serviceContainer;
     }
 
-    public function execute()
+    public function execute($controller)
     {
-        /** @var ControllerDispatcher $dispatcher */
-        $dispatcher = $this->serviceContainer->get('airsol.cli.server.command_dispatcher');
+        /** @var CommandDispatcher $dispatcher */
+        $dispatcher = $this->serviceContainer->get($controller);
         $dispatcher->dispatch();
     }
 }

@@ -15,11 +15,11 @@ class UnsupportedResourceException extends \InvalidArgumentException
     /**
      * @param mixed $resource
      */
-    function __construct($resource)
+    public function __construct($resource)
     {
         $this->resource = $resource;
 
-        parent::__construct(sprintf("Resource %s is not supported.", serialize($resource)));
+        parent::__construct(sprintf('Resource %s is not supported.', serialize($resource)));
     }
 
     /**

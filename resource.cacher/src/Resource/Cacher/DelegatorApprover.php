@@ -17,7 +17,7 @@ class DelegatorApprover implements Approver
     /**
      * @param Approver[] $approvers
      */
-    function __construct($approvers)
+    public function __construct($approvers)
     {
         $this->approvers = $approvers;
     }

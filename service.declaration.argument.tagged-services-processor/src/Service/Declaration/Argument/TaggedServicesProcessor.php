@@ -24,7 +24,7 @@ class TaggedServicesProcessor implements Processor
     /**
      * @param TagStorer $storer
      */
-    function __construct(TagStorer $storer)
+    public function __construct(TagStorer $storer)
     {
         $this->storer = $storer;
     }
@@ -40,9 +40,9 @@ class TaggedServicesProcessor implements Processor
     /**
      * @param TaggedServicesArgument $argument
      *
-     * @return object[]
-     *
      * @throws UnsupportedArgumentException if the argument is not supported
+     *
+     * @return object[]
      */
     public function process($argument)
     {
@@ -52,8 +52,8 @@ class TaggedServicesProcessor implements Processor
 
         $instances = [];
         $ids = $this->storer->get($argument->getTag());
-        foreach ($ids as $id) {
-            $instances[] = $this->container->get($id);
+        foreach ($ids as $key => $id) {
+            $instances[$key] = $this->container->get($id);
         }
 
         return $instances;

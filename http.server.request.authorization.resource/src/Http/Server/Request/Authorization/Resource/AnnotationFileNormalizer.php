@@ -2,8 +2,8 @@
 
 namespace Symsonte\Http\Server\Request\Authorization\Resource;
 
-use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\AnnotationFileResource;
+use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\UnsupportedDataAndResourceException;
 
 /**
@@ -30,17 +30,11 @@ class AnnotationFileNormalizer implements Normalizer
             throw new UnsupportedDataAndResourceException($data, $resource);
         }
 
-        $data = $data['value']['class'][0];
-
-        // is the uri the default value?
-        if (key($data['value']) === 0
-        ) {
-            $data['value']['roles'] = $data['value'];
-        }
+        $data = $data['value'];
 
         $normalization = new Normalization();
 
-        $normalization->key = $this->generateName($data['class']);
+        $normalization->key = $this->generateKey($data['metadata']['class'], $data['method']);
 
         if (isset($data['value']['roles'])) {
             $normalization->roles = $data['value']['roles'];
@@ -51,18 +45,22 @@ class AnnotationFileNormalizer implements Normalizer
 
     /**
      * @param string $class
+     * @param string $method
      *
      * @return string
      */
-    private function generateName($class)
+    private function generateKey($class, $method)
     {
-        return
+        return sprintf(
+            '%s:%s',
             strtolower(
                 strtr(
                     preg_replace('/(?<=[a-zA-Z0-9])[A-Z]/', '_\\0', $class),
                     '\\',
                     '.'
                 )
-            );
+            ),
+            $method
+        );
     }
 }
