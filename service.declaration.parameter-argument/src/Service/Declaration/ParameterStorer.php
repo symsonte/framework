@@ -15,7 +15,7 @@ class ParameterStorer
     /**
      * @param array $parameters
      */
-    function __construct($parameters = [])
+    public function __construct($parameters = [])
     {
         $this->parameters = $parameters;
     }
@@ -48,9 +48,9 @@ class ParameterStorer
      *
      * @param $key
      *
-     * @return string
-     *
      * @throws NonexistentParameterException if the parameter does not exist
+     *
+     * @return string
      */
     public function get($key)
     {

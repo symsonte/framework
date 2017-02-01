@@ -20,7 +20,7 @@ class DeductibleContainer implements Container
      * @var Storer
      */
     private $declarationStorer;
-    
+
     /**
      * @var Container
      */
@@ -31,12 +31,11 @@ class DeductibleContainer implements Container
      * @param Storer    $declarationStorer
      * @param Container $container
      */
-    function __construct(
+    public function __construct(
         IdStorer $storer,
         Storer $declarationStorer,
         Container $container
-    )
-    {
+    ) {
         $this->storer = $storer;
         $this->declarationStorer = $declarationStorer;
         $this->container = $container;
@@ -58,7 +57,7 @@ class DeductibleContainer implements Container
         if (!$this->declarationStorer->has($id)) {
             throw new NonexistentServiceException($id);
         }
-        
+
         if ($this->storer->has($id)) {
             $declaration = $this->declarationStorer->get($id);
 
@@ -72,7 +71,7 @@ class DeductibleContainer implements Container
 
         return $this->container->get($id);
     }
-    
+
     private function completeDeclaration(ConstructorDeclaration $declaration)
     {
         $refClass = new \ReflectionClass($declaration->getClass());

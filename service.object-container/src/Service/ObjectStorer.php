@@ -15,7 +15,7 @@ class ObjectStorer
     /**
      * @param object[] $objects
      */
-    function __construct($objects = [])
+    public function __construct($objects = [])
     {
         $this->objects = $objects;
     }
@@ -42,9 +42,9 @@ class ObjectStorer
     /**
      * @param $id
      *
-     * @return object
-     *
      * @throws
+     *
+     * @return object
      */
     public function get($id)
     {

@@ -55,6 +55,7 @@ class DirBuilder implements Builder
      * Fixes metadata if it comes as short version.
      *
      * @param array $metadata
+     *
      * @return array
      */
     private function fixMetadata($metadata)

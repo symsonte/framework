@@ -21,12 +21,12 @@ interface Resolver
      * @return string
      */
     public function resolveVersion();
-    
+
     /**
      * @return array
      */
     public function resolveHeaders();
-    
+
     /**
      * @return mixed
      */

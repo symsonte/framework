@@ -16,7 +16,7 @@ class UriEqualMatcher implements Matcher
     }
 
     /**
-     * @param UriMatch $match
+     * @param UriMatch               $match
      * @param GetRequest|PostRequest $request
      *
      * @return bool

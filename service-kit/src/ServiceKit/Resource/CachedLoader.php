@@ -2,8 +2,8 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
-use Symsonte\ServiceKit\Declaration\Bag;
 use Symsonte\Resource\Cacher;
+use Symsonte\ServiceKit\Declaration\Bag;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>

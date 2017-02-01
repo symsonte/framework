@@ -2,8 +2,8 @@
 
 namespace Symsonte\Http\Server\Request\Resolution\Resource;
 
-use Symsonte\Resource\Cacher as BaseCacher;
 use Symsonte\Resource\Cacher\Approver;
+use Symsonte\Resource\Cacher as BaseCacher;
 use Symsonte\Resource\Cacher\DelegatorApprover;
 use Symsonte\Resource\Storer;
 
@@ -47,14 +47,13 @@ class Cacher implements BaseCacher
     public function __construct(
         array $approvers,
         Storer $storer
-    )
-    {
+    ) {
         $this->approver = new DelegatorApprover($approvers);
         $this->storer = $storer;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function store($data, $resource)
     {
@@ -63,7 +62,7 @@ class Cacher implements BaseCacher
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function approve($resource)
     {
@@ -71,7 +70,7 @@ class Cacher implements BaseCacher
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function retrieve($resource)
     {

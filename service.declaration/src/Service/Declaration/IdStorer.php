@@ -15,7 +15,7 @@ class IdStorer
     /**
      * @param string[] $ids
      */
-    function __construct($ids = [])
+    public function __construct($ids = [])
     {
         $this->ids = $ids;
     }

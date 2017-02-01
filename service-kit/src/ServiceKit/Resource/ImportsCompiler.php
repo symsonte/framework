@@ -2,7 +2,6 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
-use Symsonte\Resource\Builder;
 use Symsonte\Resource\Compiler;
 use Symsonte\Resource\UnsupportedNormalizationException;
 
@@ -24,9 +23,9 @@ class ImportsCompiler implements Compiler
     /**
      * @param ImportsNormalization $normalization
      *
-     * @return ImportsCompilation
-     *
      * @throws UnsupportedNormalizationException
+     *
+     * @return ImportsCompilation
      */
     public function compile($normalization)
     {

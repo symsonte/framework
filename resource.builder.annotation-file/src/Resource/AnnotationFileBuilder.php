@@ -46,7 +46,7 @@ class AnnotationFileBuilder implements Builder
             $metadata = ['file' => $metadata];
         }
 
-        if (isset($metadata['file'] )
+        if (isset($metadata['file'])
             && isset($metadata['type'])
             && $metadata['type'] == 'annotation'
         ) {

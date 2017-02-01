@@ -15,7 +15,7 @@ class NonexistentMethodException extends \InvalidArgumentException
     /**
      * @param string $method
      */
-    function __construct($method)
+    public function __construct($method)
     {
         $this->method = $method;
     }

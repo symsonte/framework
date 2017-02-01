@@ -28,8 +28,8 @@ class FilesSliceReader implements SliceReader
     private $fileSliceReader;
 
     /**
-     * @param DirSliceReader  $dirSliceReader
-     * @param SliceReader[]   $fileSliceReaders
+     * @param DirSliceReader $dirSliceReader
+     * @param SliceReader[]  $fileSliceReaders
      *
      * @ds\arguments({
      *     dirSliceReader:   '@symsonte.resource.dir_slice_reader',
@@ -44,8 +44,7 @@ class FilesSliceReader implements SliceReader
     public function __construct(
         DirSliceReader $dirSliceReader,
         array $fileSliceReaders
-    )
-    {
+    ) {
         $this->dirSliceReader = $dirSliceReader;
         $this->fileSliceReader = new DelegatorSliceReader($fileSliceReaders);
     }
@@ -112,7 +111,7 @@ class FilesSliceReader implements SliceReader
             [
                 '_resource' => $this->dirSliceReader->current(
                     $iterator->getDirSliceIterator()
-                )
+                ),
             ]
         );
     }

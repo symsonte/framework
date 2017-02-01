@@ -17,9 +17,9 @@ class Container implements BaseContainer
     private $container;
 
     /**
-     * @param string      $parametersFile
-     * @param string      $cacheDir
-     * @param array|null  $filters
+     * @param string     $parametersFile
+     * @param string     $cacheDir
+     * @param array|null $filters
      */
     public function __construct($parametersFile, $cacheDir, $filters = [])
     {

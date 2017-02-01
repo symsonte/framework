@@ -39,7 +39,7 @@ class DecodeJsonBodyModifier implements BodyModifier
     {
         if (
             $this->headerSearcher->has(
-                $headers, 
+                $headers,
                 HeaderSearcher::KEY_CONTENT_TYPE,
                 HeaderSearcher::VALUE_APPLICATION_JSON
             )

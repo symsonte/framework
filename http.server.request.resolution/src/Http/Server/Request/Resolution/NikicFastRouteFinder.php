@@ -2,15 +2,12 @@
 
 namespace Symsonte\Http\Server\Request\Resolution;
 
-use FastRoute\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
 use FastRoute\DataGenerator\GroupCountBased as GroupCountBasedDataGenerator;
-use FastRoute\RouteParser\Std;
-use Symsonte\Http\Server\GetRequest;
-use Symsonte\Http\Server\PostRequest;
-use Symsonte\Http\Server\Request\MethodMatch;
-use Symsonte\Http\Server\Request\Resolution;
-use Symsonte\Http\Server\Request\UriMatch;
+use FastRoute\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
 use FastRoute\RouteCollector;
+use FastRoute\RouteParser\Std;
+use Symsonte\Http\Server\Request\MethodMatch;
+use Symsonte\Http\Server\Request\UriMatch;
 use Zend\Diactoros\Uri;
 
 /**
@@ -31,9 +28,7 @@ class NikicFastRouteFinder implements Finder
      */
     private $collector;
 
-    /**
-     */
-    function __construct()
+    public function __construct()
     {
         $this->collector = new RouteCollector(
             new Std(),
@@ -49,7 +44,7 @@ class NikicFastRouteFinder implements Finder
         $dispatcher = new GroupCountBasedDispatcher($this->collector->getData());
 
         $uri = new Uri($uri);
-        
+
         return $dispatcher->dispatch($method, $uri->getPath());
     }
 

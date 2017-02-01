@@ -20,10 +20,9 @@ class CachedInstantiator implements Instantiator
     /**
      * @param Instantiator $instantiator
      */
-    function __construct(
+    public function __construct(
         Instantiator $instantiator
-    )
-    {
+    ) {
         $this->instantiator = $instantiator;
     }
 
@@ -38,10 +37,10 @@ class CachedInstantiator implements Instantiator
     /**
      * @param ConstructorDeclaration $declaration
      *
-     * @return object
-     *
      * @throws UnsupportedDeclarationException if the declaration is not
      *                                         supported
+     *
+     * @return object
      */
     public function instantiate($declaration)
     {

@@ -2,8 +2,8 @@
 
 namespace Symsonte\Resource\Cacher;
 
-use Symsonte\Resource\Storer;
 use Symsonte\Resource\FileResource;
+use Symsonte\Resource\Storer;
 use Symsonte\Resource\UnsupportedResourceException;
 
 /**
@@ -39,13 +39,12 @@ class FileModificationTimeApprover implements Approver
      */
     public function __construct(
         Storer $storer
-    )
-    {
+    ) {
         $this->storer = $storer;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add($resource)
     {
@@ -60,7 +59,7 @@ class FileModificationTimeApprover implements Approver
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function approve($resource)
     {

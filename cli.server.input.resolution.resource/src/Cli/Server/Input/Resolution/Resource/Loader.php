@@ -5,12 +5,11 @@ namespace Symsonte\Cli\Server\Input\Resolution\Resource;
 use Symsonte\Cli\Server\Input\Resolution\Bag;
 use Symsonte\Resource\Builder;
 use Symsonte\Resource\Cacher;
+use Symsonte\Resource\Compiler as BaseCompiler;
 use Symsonte\Resource\DelegatorBuilder;
 use Symsonte\Resource\DelegatorCompiler;
 use Symsonte\Resource\DelegatorNormalizer;
 use Symsonte\Resource\DelegatorSliceReader;
-use Symsonte\Service\Declaration;
-use Symsonte\Resource\Compiler as BaseCompiler;
 use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\SliceReader;
 
@@ -81,8 +80,7 @@ class Loader
         array $normalizers,
         array $compilers,
         Cacher $cacher
-    )
-    {
+    ) {
         $this->builder = new DelegatorBuilder($builders);
         $this->sliceReader = new DelegatorSliceReader($sliceReaders);
         $this->normalizer = new DelegatorNormalizer($normalizers);

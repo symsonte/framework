@@ -5,7 +5,6 @@ namespace Symsonte\ServiceKit;
 use Symsonte\Service\Container as BaseContainer;
 use Symsonte\ServiceKit\Container\Builder as ContainerBuilder;
 use Symsonte\ServiceKit\Declaration\Bag\CachedServiceBuilder;
-use Symsonte\ServiceKit\Declaration\Bag\ServiceBuilder;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -18,9 +17,9 @@ class CachedContainer implements BaseContainer
     private $container;
 
     /**
-     * @param string      $parametersFile
-     * @param string      $cacheDir
-     * @param array|null  $filters
+     * @param string     $parametersFile
+     * @param string     $cacheDir
+     * @param array|null $filters
      */
     public function __construct($parametersFile, $cacheDir, $filters = [])
     {

@@ -15,7 +15,7 @@ class FilesNormalizer implements Normalizer
     /**
      * @param Normalizer[] $normalizers
      */
-    function __construct(array $normalizers)
+    public function __construct(array $normalizers)
     {
         $this->normalizer = new DelegatorNormalizer($normalizers);
     }

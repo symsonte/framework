@@ -20,9 +20,9 @@ interface Approver
     /**
      * Returns whether given resource is approved.
      *
-     * @param  mixed $resource
+     * @param mixed $resource
      *
-     * @return bool  True if the cache is still valid, false otherwise
+     * @return bool True if the cache is still valid, false otherwise
      */
     public function approve($resource);
 }

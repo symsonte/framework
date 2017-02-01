@@ -35,12 +35,11 @@ class CircularContainer implements Container
      * @param CallStorer    $callStorer
      * @param CallProcessor $callProcessor
      */
-    function __construct(
+    public function __construct(
         Container $container,
         CallStorer $callStorer,
         CallProcessor $callProcessor
-    )
-    {
+    ) {
         $this->container = $container;
         $this->callStorer = $callStorer;
         $this->callProcessor = $callProcessor;

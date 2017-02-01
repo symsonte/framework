@@ -35,8 +35,7 @@ class EventBuilder implements Builder
     public function __construct(
         array $builders,
         array $updaters
-    )
-    {
+    ) {
         $this->builders = $builders;
         $this->updaters = $updaters;
     }

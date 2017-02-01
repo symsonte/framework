@@ -2,8 +2,8 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
-use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\FilesNormalizer as InternalFilesNormalizer;
+use Symsonte\Resource\Normalizer;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -36,7 +36,7 @@ class FilesNormalizer implements Normalizer
      *     normalizers: '#symsonte.service_kit.resource.file_normalizer'
      * })
      */
-    function __construct(array $normalizers)
+    public function __construct(array $normalizers)
     {
         $this->normalizer = new InternalFilesNormalizer($normalizers);
     }

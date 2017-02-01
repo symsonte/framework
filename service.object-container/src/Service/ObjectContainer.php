@@ -12,7 +12,7 @@ class ObjectContainer implements Container
     /**
      * @param ObjectStorer $storer
      */
-    function __construct(ObjectStorer $storer)
+    public function __construct(ObjectStorer $storer)
     {
         $this->storer = $storer;
     }

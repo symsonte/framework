@@ -45,13 +45,13 @@ class DataSliceReader implements SliceReader
         }
 
         return [
-            'key' => $iterator->key(),
-            'value' => $iterator->current()
+            'key'   => $iterator->key(),
+            'value' => $iterator->current(),
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function next($iterator)
     {
@@ -63,7 +63,7 @@ class DataSliceReader implements SliceReader
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function close($iterator)
     {

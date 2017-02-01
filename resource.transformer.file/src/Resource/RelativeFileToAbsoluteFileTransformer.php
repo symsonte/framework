@@ -2,8 +2,6 @@
 
 namespace Symsonte\Resource;
 
-use Symsonte\Resource\Builder;
-
 class RelativeFileToAbsoluteFileTransformer implements Transformer
 {
     /**
@@ -14,13 +12,13 @@ class RelativeFileToAbsoluteFileTransformer implements Transformer
     /**
      * @param Builder $builder
      */
-    function __construct(Builder $builder)
+    public function __construct(Builder $builder)
     {
         $this->builder = $builder;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function support($resource, $parentResource = null)
     {
@@ -44,13 +42,13 @@ class RelativeFileToAbsoluteFileTransformer implements Transformer
     public function transform($resource, $parentResource = null)
     {
         $file = sprintf(
-            "%s/%s",
+            '%s/%s',
             dirname($parentResource->getFile()),
             $resource->getFile()
         );
 
-        return $this->builder->build(array(
-            'file' => $file
-        ));
+        return $this->builder->build([
+            'file' => $file,
+        ]);
     }
 }

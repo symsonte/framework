@@ -2,8 +2,8 @@
 
 namespace Symsonte\Http\Server\Request;
 
-use Symsonte\Http\Server\PostRequest;
 use Symsonte\Http\Server\GetRequest;
+use Symsonte\Http\Server\PostRequest;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>

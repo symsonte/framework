@@ -47,8 +47,8 @@ class DirsBuilder implements Builder
                         '*.php',
                         null,
                         [
-                            'type' => 'annotation',
-                            'annotation' => '/^di\\\\/'
+                            'type'       => 'annotation',
+                            'annotation' => '/^di\\\\/',
                         ]
                     ))->getDeclarations()
                 )

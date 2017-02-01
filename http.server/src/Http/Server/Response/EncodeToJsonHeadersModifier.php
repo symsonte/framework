@@ -1,6 +1,7 @@
 <?php
 
 namespace Symsonte\Http\Server\Response;
+
 use Symsonte\Http\Server\Request\HeaderSearcher;
 
 /**

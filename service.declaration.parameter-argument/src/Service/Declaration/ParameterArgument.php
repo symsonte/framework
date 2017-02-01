@@ -15,7 +15,7 @@ class ParameterArgument implements Argument
     /**
      * @param string $key
      */
-    function __construct($key)
+    public function __construct($key)
     {
         $this->key = $key;
     }

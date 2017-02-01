@@ -17,7 +17,7 @@ class UnsupportedArgumentException extends \InvalidArgumentException
     /**
      * @param $argument
      */
-    function __construct($argument)
+    public function __construct($argument)
     {
         $this->argument = $argument;
 

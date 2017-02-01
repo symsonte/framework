@@ -26,8 +26,6 @@ class PioneerBuilder
         $this->cacheDir = $cacheDir;
     }
 
-    /**
-     */
     public function build()
     {
         return new Bag(
@@ -88,7 +86,7 @@ class PioneerBuilder
                     'symsonte.resource.builder',
                     'Symsonte\Resource\DelegatorBuilder',
                     [
-                        new TaggedServicesArgument('symsonte.resource.builder')
+                        new TaggedServicesArgument('symsonte.resource.builder'),
                     ]
                 ),
                 true,
@@ -97,7 +95,7 @@ class PioneerBuilder
                 [],
                 [],
                 []
-            )
+            ),
         ];
     }
 
@@ -119,7 +117,7 @@ class PioneerBuilder
                             new TaggedServicesArgument('symsonte.resource.builder'),
                             new TaggedServicesArgument('symsonte.resource.slice_reader'),
                             new TaggedServicesArgument('symsonte.service_kit.resource.normalizer'),
-                            new TaggedServicesArgument('symsonte.service_kit.resource.compiler')
+                            new TaggedServicesArgument('symsonte.service_kit.resource.compiler'),
                         ]
                     ),
                     false,
@@ -128,7 +126,7 @@ class PioneerBuilder
                     [],
                     [],
                     []
-                )
+                ),
             ]
         );
     }
@@ -169,7 +167,7 @@ class PioneerBuilder
                     'Symsonte\Resource\AnnotationFileSliceReader',
                     [
                         new ServiceArgument('symsonte.resource.data_slice_reader'),
-                        new ServiceArgument('symsonte.resource.yaml_doc_parser')
+                        new ServiceArgument('symsonte.resource.yaml_doc_parser'),
                     ]
                 ),
                 false,
@@ -215,7 +213,7 @@ class PioneerBuilder
                     'Symsonte\Resource\FilesSliceReader',
                     [
                         new ServiceArgument('symsonte.resource.dir_slice_reader'),
-                        new TaggedServicesArgument('symsonte.resource.file_slice_reader')
+                        new TaggedServicesArgument('symsonte.resource.file_slice_reader'),
                     ]
                 ),
                 false,
@@ -230,7 +228,7 @@ class PioneerBuilder
                     'symsonte.resource.slice_reader',
                     'Symsonte\Resource\DelegatorSliceReader',
                     [
-                        new TaggedServicesArgument('symsonte.resource.slice_reader')
+                        new TaggedServicesArgument('symsonte.resource.slice_reader'),
                     ]
                 ),
                 false,
@@ -239,7 +237,7 @@ class PioneerBuilder
                 [],
                 [],
                 []
-            )
+            ),
         ];
     }
 
@@ -266,7 +264,7 @@ class PioneerBuilder
                     'symsonte.service_kit.resource.annotation_file_normalizer',
                     'Symsonte\ServiceKit\Resource\AnnotationFileNormalizer',
                     [
-                        new TaggedServicesArgument('symsonte.service_kit.resource.annotation_file_normalizer')
+                        new TaggedServicesArgument('symsonte.service_kit.resource.annotation_file_normalizer'),
                     ]
                 ),
                 false,
@@ -281,7 +279,7 @@ class PioneerBuilder
                     'symsonte.service_kit.resource.files_normalizer',
                     'Symsonte\ServiceKit\Resource\FilesNormalizer',
                     [
-                        new TaggedServicesArgument('symsonte.service_kit.resource.file_normalizer')
+                        new TaggedServicesArgument('symsonte.service_kit.resource.file_normalizer'),
                     ]
                 ),
                 false,
@@ -296,7 +294,7 @@ class PioneerBuilder
                     'symsonte.service_kit.resource.normalizer',
                     'Symsonte\Resource\DelegatorNormalizer',
                     [
-                        new TaggedServicesArgument('symsonte.service_kit.resource.normalizer')
+                        new TaggedServicesArgument('symsonte.service_kit.resource.normalizer'),
                     ]
                 ),
                 false,
@@ -305,7 +303,7 @@ class PioneerBuilder
                 [],
                 [],
                 []
-            )
+            ),
         ];
     }
 
@@ -356,7 +354,7 @@ class PioneerBuilder
                     'symsonte.service_kit.resource.service_compiler',
                     'Symsonte\ServiceKit\Resource\ServiceCompiler',
                     [
-                        new TaggedServicesArgument('symsonte.service_kit.resource.argument.compiler')
+                        new TaggedServicesArgument('symsonte.service_kit.resource.argument.compiler'),
                     ]
                 ),
                 false,
@@ -371,7 +369,7 @@ class PioneerBuilder
                     'symsonte.service_kit.resource.compiler',
                     'Symsonte\Resource\DelegatorCompiler',
                     [
-                        new TaggedServicesArgument('symsonte.service_kit.resource.compiler')
+                        new TaggedServicesArgument('symsonte.service_kit.resource.compiler'),
                     ]
                 ),
                 false,
@@ -380,7 +378,7 @@ class PioneerBuilder
                 [],
                 [],
                 []
-            )
+            ),
         ];
     }
 }

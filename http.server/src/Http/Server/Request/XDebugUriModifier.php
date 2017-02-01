@@ -1,6 +1,7 @@
 <?php
 
 namespace Symsonte\Http\Server\Request;
+
 use Zend\Diactoros\Uri;
 
 /**
@@ -23,12 +24,12 @@ class XDebugUriModifier implements UriModifier
      */
     public function modify($method, $uri, $version, $headers, $body)
     {
-        $parameters = array();
+        $parameters = [];
         parse_str(parse_url($uri, PHP_URL_QUERY), $parameters);
         unset($parameters['XDEBUG_SESSION_START']);
 
         $uri = new Uri($uri);
-        
+
         return $uri->withQuery(http_build_query($parameters))->__toString();
     }
 }

@@ -15,12 +15,12 @@ class UnsupportedNormalizationException extends \InvalidArgumentException
     /**
      * @param mixed $declaration
      */
-    function __construct($declaration)
+    public function __construct($declaration)
     {
         $this->normalization = $declaration;
 
         parent::__construct(sprintf(
-            "Normalization %s not supported",
+            'Normalization %s not supported',
             print_r($declaration, true)
         ));
     }

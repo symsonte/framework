@@ -40,7 +40,7 @@ class FilesystemTimeStorer implements Storer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function add($data, $resource)
     {
@@ -48,7 +48,7 @@ class FilesystemTimeStorer implements Storer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function has($resource)
     {
@@ -56,7 +56,7 @@ class FilesystemTimeStorer implements Storer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function get($resource)
     {

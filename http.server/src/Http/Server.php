@@ -2,13 +2,13 @@
 
 namespace Symsonte\Http;
 
-use Symsonte\Http\Server\Request\DiactorosResolver as RequestResolver;
-use Symsonte\Http\Server\Request\UriModifier as RequestUriModifier;
 use Symsonte\Http\Server\Request\BodyModifier as RequestBodyModifier;
+use Symsonte\Http\Server\Request\DiactorosResolver as RequestResolver;
 use Symsonte\Http\Server\Request\HeadersModifier as RequestHeadersModifier;
-use Symsonte\Http\Server\Response\Sender as ResponseSender;
+use Symsonte\Http\Server\Request\UriModifier as RequestUriModifier;
 use Symsonte\Http\Server\Response\BodyModifier as ResponseBodyModifier;
 use Symsonte\Http\Server\Response\HeadersModifier as ResponseHeadersModifier;
+use Symsonte\Http\Server\Response\Sender as ResponseSender;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -37,12 +37,12 @@ class Server
      * @var RequestUriModifier[]
      */
     private $requestUriModifiers;
-    
+
     /**
      * @var RequestHeadersModifier[]
      */
     private $requestHeadersModifiers;
-    
+
     /**
      * @var RequestBodyModifier[]
      */
@@ -72,17 +72,17 @@ class Server
      * @var array
      */
     private $version;
-    
+
     /**
      * @var array
      */
     private $headers;
-    
+
     /**
      * @var mixed
      */
     private $body;
-    
+
     /**
      * @param RequestResolver                $requestResolver
      * @param ResponseSender                 $responseSender
@@ -112,7 +112,7 @@ class Server
      *     responseBodyModifiers:    '#symsonte.http.server.response.body_modifier',
      * })
      */
-    function __construct(
+    public function __construct(
         RequestResolver $requestResolver,
         ResponseSender $responseSender,
         array $requestUriModifiers = null,
@@ -120,8 +120,7 @@ class Server
         array $requestBodyModifiers = null,
         array $responseHeadersModifiers = null,
         array $responseBodyModifiers = null
-    )
-    {
+    ) {
         $this->requestResolver = $requestResolver;
         $this->responseSender = $responseSender;
         $this->requestUriModifiers = $requestUriModifiers ?: [];
@@ -186,7 +185,7 @@ class Server
 
         return $this->headers;
     }
-    
+
     /**
      * @return mixed
      */
@@ -203,7 +202,7 @@ class Server
                 $this->body = $bodyModifier->modify($method, $uri, $version, $headers, $this->body);
             }
         }
-        
+
         return $this->body;
     }
 
@@ -212,7 +211,7 @@ class Server
      * @param string $status
      * @param array  $headers
      */
-    public function sendResponse($body = '', $status = '200', $headers = array())
+    public function sendResponse($body = '', $status = '200', $headers = [])
     {
         foreach ($this->responseHeadersModifiers as $headerModifier) {
             $headers = $headerModifier->modify($status, $headers, $body);

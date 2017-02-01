@@ -15,7 +15,7 @@ class TaggedServicesArgument implements Argument
     /**
      * @param string $tag
      */
-    function __construct($tag)
+    public function __construct($tag)
     {
         $this->tag = $tag;
     }

@@ -29,9 +29,9 @@ class ServiceProcessor implements Processor
     /**
      * @param ServiceArgument $argument
      *
-     * @return object
-     *
      * @throws UnsupportedArgumentException if the argument is not supported.
+     *
+     * @return object
      */
     public function process($argument)
     {
@@ -43,7 +43,7 @@ class ServiceProcessor implements Processor
             return $this->container->get($argument->getId());
         } catch (NonexistentServiceException $e) {
             if (strpos($argument->getId(), '?') === 0) {
-                return null;
+                return;
             }
 
             throw $e;

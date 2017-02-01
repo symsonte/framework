@@ -11,7 +11,7 @@ use Zend\Diactoros\ServerRequestFactory;
  * @ds\service({
  *     private: true
  * })
- * 
+ *
  * @di\service({
  *     private: true
  * })
@@ -46,7 +46,7 @@ class DiactorosResolver implements Resolver
     {
         return $this->resolveRequest()->getProtocolVersion();
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -71,7 +71,7 @@ class DiactorosResolver implements Resolver
         if (is_null($this->request)) {
             $this->request = ServerRequestFactory::fromGlobals();
         }
-        
+
         return $this->request;
     }
 }

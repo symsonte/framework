@@ -45,9 +45,9 @@ class NginxBasicResolver
     }
 
     /**
-     * @return BasicCredential
-     *
      * @throws UnresolvableException
+     *
+     * @return BasicCredential
      */
     public function resolve()
     {

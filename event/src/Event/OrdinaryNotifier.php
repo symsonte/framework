@@ -28,8 +28,6 @@ class OrdinaryNotifier
         $this->listeners[] = $listener;
     }
 
-    /**
-     */
     public function start()
     {
         foreach ($this->listeners as $listener) {

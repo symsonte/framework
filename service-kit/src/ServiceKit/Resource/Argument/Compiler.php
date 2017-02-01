@@ -12,9 +12,9 @@ interface Compiler
     /**
      * @param string $argument
      *
-     * @return Argument
-     *
      * @throws UnsupportedArgumentException if the parameter is not supported.
+     *
+     * @return Argument
      */
     public function compile($argument);
 }

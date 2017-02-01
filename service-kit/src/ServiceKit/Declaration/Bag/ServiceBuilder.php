@@ -2,9 +2,9 @@
 
 namespace Symsonte\ServiceKit\Declaration\Bag;
 
+use Symsonte\ServiceKit\Container\Builder as ContainerBuilder;
 use Symsonte\ServiceKit\Declaration;
 use Symsonte\ServiceKit\Declaration\Bag;
-use Symsonte\ServiceKit\Container\Builder as ContainerBuilder;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -44,8 +44,8 @@ class ServiceBuilder implements Builder
     public function build()
     {
         $setupBuilder = new SetupBuilder(
-            $this->parametersFile, 
-            $this->cacheDir, 
+            $this->parametersFile,
+            $this->cacheDir,
             $this->filters
         );
         $containerBuilder = new ContainerBuilder();

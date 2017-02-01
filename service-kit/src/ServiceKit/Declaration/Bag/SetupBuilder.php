@@ -2,7 +2,6 @@
 
 namespace Symsonte\ServiceKit\Declaration\Bag;
 
-use Symsonte\Resource\Builder as ResourceBuilder;
 use Symsonte\Service\ConstructorDeclaration;
 use Symsonte\Service\Declaration\ScalarArgument;
 use Symsonte\Service\Declaration\ServiceArgument;
@@ -61,7 +60,7 @@ class SetupBuilder
                                 new ServiceArgument('symsonte.resource.builder'),
                                 new ServiceArgument('symsonte.service_kit.resource.loader'),
                                 new ScalarArgument($this->cacheDir),
-                                new ScalarArgument($this->filters)
+                                new ScalarArgument($this->filters),
                             ]
                         ),
                         true,
@@ -70,7 +69,7 @@ class SetupBuilder
                         [],
                         [],
                         []
-                    )
+                    ),
                 ]
             )
         );
@@ -99,11 +98,11 @@ class SetupBuilder
                         [],
                         [],
                         []
-                    )
+                    ),
                 ]
             ),
             [
-                'cache_dir' => $this->cacheDir
+                'cache_dir' => $this->cacheDir,
             ]
         );
     }

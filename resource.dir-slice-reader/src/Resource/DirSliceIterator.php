@@ -21,8 +21,7 @@ class DirSliceIterator
     public function __construct(
         \Iterator $iterator,
         DirResource $resource
-    )
-    {
+    ) {
         $this->iterator = $iterator;
         $this->resource = $resource;
     }
