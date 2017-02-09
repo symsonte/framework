@@ -5,7 +5,6 @@ namespace Symsonte\Http\Server\Request\Authorization\Resource;
 use Symsonte\Http\Server\Request\Authorization;
 use Symsonte\Http\Server\Request\MethodMatch;
 use Symsonte\Http\Server\Request\UriMatch;
-use Symsonte\Service\Declaration\Call;
 use Symsonte\Resource\Compiler as BaseCompiler;
 use Symsonte\Resource\UnsupportedNormalizationException;
 
@@ -27,9 +26,9 @@ class Compiler implements BaseCompiler
     /**
      * @param Normalization $normalization
      *
-     * @return Compilation
-     *
      * @throws UnsupportedNormalizationException
+     *
+     * @return Compilation
      */
     public function compile($normalization)
     {

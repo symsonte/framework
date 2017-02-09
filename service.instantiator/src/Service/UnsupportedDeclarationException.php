@@ -15,7 +15,7 @@ class UnsupportedDeclarationException extends \InvalidArgumentException
     /**
      * @param Declaration $declaration
      */
-    function __construct(Declaration $declaration)
+    public function __construct(Declaration $declaration)
     {
         $this->declaration = $declaration;
     }

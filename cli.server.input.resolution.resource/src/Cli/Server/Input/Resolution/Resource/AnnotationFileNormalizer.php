@@ -2,8 +2,8 @@
 
 namespace Symsonte\Cli\Server\Input\Resolution\Resource;
 
-use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\AnnotationFileResource;
+use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\UnsupportedDataAndResourceException;
 
 /**

@@ -12,10 +12,10 @@ interface SliceReader
      *
      * @param mixed $resource
      *
-     * @return mixed The iterator.
-     *
      * @throws UnsupportedResourceException If given resource is not supported
      * @throws InvalidResourceException     If given resource is invalid
+     *
+     * @return mixed The iterator.
      */
     public function init($resource);
 
@@ -25,10 +25,10 @@ interface SliceReader
      *
      * @param mixed $iterator
      *
+     * @throws UnsupportedSliceIteratorException If the iterator is not supported.
+     *
      * @return mixed|false The current item in the iteration or false if there are no
      *                     more items.
-     *
-     * @throws UnsupportedSliceIteratorException If the iterator is not supported.
      */
     public function current($iterator);
 
@@ -36,9 +36,10 @@ interface SliceReader
      * Moves internal pointer to the next item in the iteration.
      * If there are no more items, then the method "current" will returns false.
      *
-     * @throws UnsupportedSliceIteratorException If the iterator is not supported.
      *
      * @param mixed $iterator
+     *
+     * @throws UnsupportedSliceIteratorException If the iterator is not supported.
      */
     public function next($iterator);
 
@@ -50,5 +51,4 @@ interface SliceReader
      * @throws UnsupportedSliceIteratorException If the iterator is not supported.
      */
     public function close($iterator);
-
 }

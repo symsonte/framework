@@ -5,7 +5,6 @@ namespace Symsonte\Http\Server\Request\Resolution\Resource;
 use Symsonte\Http\Server\Request\MethodMatch;
 use Symsonte\Http\Server\Request\Resolution;
 use Symsonte\Http\Server\Request\UriMatch;
-use Symsonte\Service\Declaration\Call;
 use Symsonte\Resource\Compiler as BaseComposer;
 use Symsonte\Resource\UnsupportedNormalizationException;
 
@@ -27,9 +26,9 @@ class Compiler implements BaseComposer
     /**
      * @param Normalization $normalization
      *
-     * @return Compilation
-     *
      * @throws UnsupportedNormalizationException
+     *
+     * @return Compilation
      */
     public function compile($normalization)
     {

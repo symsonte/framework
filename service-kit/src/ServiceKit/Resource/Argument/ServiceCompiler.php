@@ -24,7 +24,7 @@ class ServiceCompiler implements Compiler
      */
     public function compile($argument)
     {
-        if ($argument[0] != "@") {
+        if ($argument[0] != '@') {
             throw new UnsupportedArgumentException($argument);
         }
 

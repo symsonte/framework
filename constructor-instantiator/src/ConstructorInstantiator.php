@@ -17,9 +17,9 @@ class ConstructorInstantiator
      * @param string $class
      * @param array  $arguments
      *
-     * @return object
-     *
      * @throws NonexistentClassException if class does not exist
+     *
+     * @return object
      */
     public function instantiate($class, $arguments = [])
     {

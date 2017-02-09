@@ -2,7 +2,6 @@
 
 namespace Symsonte\ServiceKit;
 
-use Symsonte\ServiceKit;
 use Symsonte\ServiceKit\Declaration\Bag;
 
 /**

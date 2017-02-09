@@ -4,13 +4,13 @@ namespace Symsonte\Resource;
 
 use Composer\Autoload\ClassLoader;
 use PhpParser\Comment\Doc;
+use PhpParser\Error;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
-use Symfony\Component\Yaml\Yaml;
 use PhpParser\ParserFactory;
-use PhpParser\Error;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -26,17 +26,17 @@ use PhpParser\Error;
 class YamlDocParser implements DocParser
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function parse($file, $name = null)
     {
         $data = [];
-        
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+
+        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
 
         try {
             $nodes = $parser->parse(file_get_contents($file));
-            /** @var Namespace_ $namespace */
+            /* @var Namespace_ $namespace */
             if (isset($nodes[0])) {
                 $namespace = $nodes[0];
                 if ($namespace instanceof Namespace_) {
@@ -60,14 +60,14 @@ class YamlDocParser implements DocParser
                                 $annotations = $this->resolveAnnotations($doc->getText());
                                 foreach ($annotations as $annotation) {
                                     if (!$name || preg_match($name, $annotation['key'])) {
-                                        $data['class'][] = array(
-                                            'class' => $className,
-                                            'key' => $annotation['key'],
-                                            'value' => (array) Yaml::parse($annotation['value']),
-                                            'metadata' => array(
-                                                'class' => $className
-                                            )
-                                        );
+                                        $data['class'][] = [
+                                            'class'    => $className,
+                                            'key'      => $annotation['key'],
+                                            'value'    => (array) Yaml::parse($annotation['value']),
+                                            'metadata' => [
+                                                'class' => $className,
+                                            ],
+                                        ];
                                     }
                                 }
                             }
@@ -83,14 +83,14 @@ class YamlDocParser implements DocParser
                                         $annotations = $this->resolveAnnotations($doc->getText());
                                         foreach ($annotations as $annotation) {
                                             if (!$name || preg_match($name, $annotation['key'])) {
-                                                $data['properties'][] = array(
+                                                $data['properties'][] = [
                                                     'property' => $child->name,
-                                                    'key' => $annotation['key'],
-                                                    'value' => (array) Yaml::parse($annotation['value']),
-                                                    'metadata' => array(
-                                                        'class' => $className
-                                                    )
-                                                );
+                                                    'key'      => $annotation['key'],
+                                                    'value'    => (array) Yaml::parse($annotation['value']),
+                                                    'metadata' => [
+                                                        'class' => $className,
+                                                    ],
+                                                ];
                                             }
                                         }
                                     }
@@ -104,14 +104,14 @@ class YamlDocParser implements DocParser
                                         $annotations = $this->resolveAnnotations($doc->getText());
                                         foreach ($annotations as $annotation) {
                                             if (!$name || preg_match($name, $annotation['key'])) {
-                                                $data['method'][] = array(
-                                                    'method' => $child->name,
-                                                    'key' => $annotation['key'],
-                                                    'value' => (array) Yaml::parse($annotation['value']),
-                                                    'metadata' => array(
-                                                        'class' => $className
-                                                    )
-                                                );
+                                                $data['method'][] = [
+                                                    'method'   => $child->name,
+                                                    'key'      => $annotation['key'],
+                                                    'value'    => (array) Yaml::parse($annotation['value']),
+                                                    'metadata' => [
+                                                        'class' => $className,
+                                                    ],
+                                                ];
                                             }
                                         }
                                     }
@@ -138,7 +138,8 @@ class YamlDocParser implements DocParser
     }
 
     /**
-     * Copied from Symfony/Component/Routing/Loader/AnnotationFileLoader.php
+     * Copied from Symfony/Component/Routing/Loader/AnnotationFileLoader.php.
+     *
      * @author Fabien Potencier <fabien@symfony.com>
      *
      * Returns the full class name for the first class in the file.
@@ -169,7 +170,7 @@ class YamlDocParser implements DocParser
                 do {
                     $namespace .= $token[1];
                     $token = $tokens[++$i];
-                } while ($i < $count && is_array($token) && in_array($token[0], array(T_NS_SEPARATOR, T_STRING)));
+                } while ($i < $count && is_array($token) && in_array($token[0], [T_NS_SEPARATOR, T_STRING]));
             }
 
             if (T_CLASS === $token[0]) {
@@ -185,7 +186,8 @@ class YamlDocParser implements DocParser
     }
 
     /**
-     * @param  string $comment
+     * @param string $comment
+     *
      * @return array
      */
     private function resolveAnnotations($comment)
@@ -203,7 +205,8 @@ class YamlDocParser implements DocParser
     }
 
     /**
-     * Copied from phpDocumentor/ReflectionDocBlock/src/phpDocumentor/Reflection/DocBlock.php::cleanInput
+     * Copied from phpDocumentor/ReflectionDocBlock/src/phpDocumentor/Reflection/DocBlock.php::cleanInput.
+     *
      * @codeCoverageIgnore
      *
      * @param string $comment
@@ -226,7 +229,7 @@ class YamlDocParser implements DocParser
         }
 
         // normalize strings
-        $comment = str_replace(array("\r\n", "\r"), "\n", $comment);
+        $comment = str_replace(["\r\n", "\r"], "\n", $comment);
 
         return $comment;
     }
@@ -234,12 +237,12 @@ class YamlDocParser implements DocParser
     private function splitAnnotations($comment)
     {
         if (strpos($comment, "\n@")) {
-            $comment = "\n" . $comment;
+            $comment = "\n".$comment;
             $comment = str_replace("\n@", "\n@@", $comment);
             $comment = explode("\n@", $comment);
             array_shift($comment);
         } else {
-            $comment = array($comment);
+            $comment = [$comment];
         }
 
         return $comment;
@@ -249,7 +252,7 @@ class YamlDocParser implements DocParser
     {
         $data = [];
         foreach ($annotations as $annotation) {
-            $data[] = str_replace("\n", "", $annotation);
+            $data[] = str_replace("\n", '', $annotation);
         }
 
         return $data;

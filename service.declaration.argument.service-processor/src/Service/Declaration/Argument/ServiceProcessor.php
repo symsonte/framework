@@ -26,9 +26,9 @@ class ServiceProcessor implements Processor
     /**
      * @param ServiceArgument $argument
      *
-     * @return object
-     *
      * @throws UnsupportedArgumentException if the argument is not supported.
+     *
+     * @return object
      */
     public function process($argument)
     {

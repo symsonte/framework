@@ -45,14 +45,13 @@ class OrdinaryCacher implements Cacher
     public function __construct(
         array $approvers,
         Storer $storer
-    )
-    {
+    ) {
         $this->approver = new DelegatorApprover($approvers);
         $this->storer = $storer;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function store($data, $resource)
     {
@@ -61,7 +60,7 @@ class OrdinaryCacher implements Cacher
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function approve($resource)
     {
@@ -69,7 +68,7 @@ class OrdinaryCacher implements Cacher
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function retrieve($resource)
     {

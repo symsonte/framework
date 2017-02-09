@@ -39,7 +39,7 @@ class OrdinaryFinder implements Finder
      *     matchers: '#symsonte.http.server.request.matcher'
      * })
      */
-    function __construct(array $matchers)
+    public function __construct(array $matchers)
     {
         $this->matcher = new DelegatorMatcher($matchers);
         $this->bag = new Bag();

@@ -21,7 +21,7 @@ class Call
      * @param string     $method
      * @param Argument[] $arguments
      */
-    function __construct($method, $arguments = [])
+    public function __construct($method, $arguments = [])
     {
         $this->method = $method;
         $this->arguments = $arguments;

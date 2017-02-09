@@ -15,11 +15,11 @@ class NonexistentDeclarationException extends \InvalidArgumentException
     /**
      * @param string $id
      */
-    function __construct($id)
+    public function __construct($id)
     {
         $this->id = $id;
 
-        parent::__construct(sprintf("Declaration with id \"%s\" does not exist."));
+        parent::__construct(sprintf('Declaration with id "%s" does not exist.'));
     }
 
     /**

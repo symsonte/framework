@@ -15,7 +15,7 @@ class DelegatorNormalizer implements Normalizer
     /**
      * @param Normalizer[] $normalizers
      */
-    function __construct($normalizers = [])
+    public function __construct($normalizers = [])
     {
         $this->normalizers = $normalizers;
     }

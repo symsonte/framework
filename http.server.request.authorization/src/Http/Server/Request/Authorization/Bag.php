@@ -17,7 +17,7 @@ class Bag
     /**
      * @param Authorization[]|null $authorizations
      */
-    function __construct($authorizations = [])
+    public function __construct($authorizations = [])
     {
         $this->authorizations = $authorizations;
     }

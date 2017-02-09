@@ -15,7 +15,7 @@ class TagStorer
     /**
      * @param array $ids
      */
-    function __construct($ids = [])
+    public function __construct($ids = [])
     {
         $this->ids = $ids;
     }

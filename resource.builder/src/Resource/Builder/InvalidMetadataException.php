@@ -15,7 +15,7 @@ class InvalidMetadataException extends \InvalidArgumentException
     /**
      * @param array $metadata
      */
-    function __construct($metadata)
+    public function __construct($metadata)
     {
         $this->metadata = $metadata;
     }

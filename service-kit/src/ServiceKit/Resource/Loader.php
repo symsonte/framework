@@ -2,17 +2,17 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
-use Symsonte\Resource\DelegatorBuilder;
-use Symsonte\Resource\DelegatorNormalizer;
-use Symsonte\Resource\DelegatorSliceReader;
-use Symsonte\ServiceKit\Declaration\Bag;
 use Symsonte\Resource\Builder;
 use Symsonte\Resource\Cacher;
-use Symsonte\Resource\SliceReader;
 use Symsonte\Resource\Compiler;
-use Symsonte\Resource\Normalizer;
+use Symsonte\Resource\DelegatorBuilder;
 use Symsonte\Resource\DelegatorCompiler;
+use Symsonte\Resource\DelegatorNormalizer;
+use Symsonte\Resource\DelegatorSliceReader;
+use Symsonte\Resource\Normalizer;
+use Symsonte\Resource\SliceReader;
 use Symsonte\ServiceKit\Declaration;
+use Symsonte\ServiceKit\Declaration\Bag;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -71,13 +71,12 @@ class Loader
      * })
      */
     public function __construct(
-        array $builders = [],
-        array $sliceReaders = [],
-        array $normalizers = [],
-        array $compilers = [],
+        array $builders,
+        array $sliceReaders,
+        array $normalizers,
+        array $compilers,
         $cacher
-    )
-    {
+    ) {
         $this->builder = new DelegatorBuilder($builders);
         $this->sliceReader = new DelegatorSliceReader($sliceReaders);
         $this->normalizer = new DelegatorNormalizer($normalizers);

@@ -5,8 +5,8 @@ namespace Symsonte\Http\Server\Request;
 use Symsonte\Http\Server\GetRequest;
 use Symsonte\Http\Server\OptionsRequest;
 use Symsonte\Http\Server\PostRequest;
-use Symsonte\Http\Server\PostRequest\StringField;
 use Symsonte\Http\Server\PostRequest\FileField;
+use Symsonte\Http\Server\PostRequest\StringField;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -64,7 +64,7 @@ class Resolver
                     $uri,
                     $headers,
                     $fields,
-                    file_get_contents("php://input")
+                    file_get_contents('php://input')
                 );
 
                 foreach ($_POST as $key => $value) {
@@ -86,7 +86,7 @@ class Resolver
 
                 break;
             default:
-                throw new \InvalidArgumentException(sprintf("Method %s not implemented yet.", $_SERVER['REQUEST_METHOD']));
+                throw new \InvalidArgumentException(sprintf('Method %s not implemented yet.', $_SERVER['REQUEST_METHOD']));
         }
 
         $this->request = $request;

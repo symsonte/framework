@@ -19,7 +19,7 @@ class UnsupportedArgumentException extends \Exception
     {
         $this->argument = $argument;
 
-        parent::__construct(sprintf("Parameter %s is unsupported.", $argument));
+        parent::__construct(sprintf('Parameter %s is unsupported.', $argument));
     }
 
     /**

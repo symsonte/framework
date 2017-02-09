@@ -2,30 +2,26 @@
 
 namespace Symsonte\Http\Server;
 
+use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
 use Symsonte\Http\Server;
-use Symsonte\Http\Server\PostRequest;
-use Symsonte\Resource\Builder;
+use Symsonte\Http\Server\Request\Authentication\Credential\InvalidDataException;
+use Symsonte\Http\Server\Request\Authentication\Credential\Processor as CredentialProcessor;
+use Symsonte\Http\Server\Request\Authentication\Credential\Resolver as CredentialResolver;
+use Symsonte\Http\Server\Request\Authentication\Credential\UnresolvableException;
+use Symsonte\Http\Server\Request\Authorization\Checker;
+use Symsonte\Http\Server\Request\Authorization\Role\Collector as RoleCollector;
+use Symsonte\Http\Server\Request\Resolution\Finder;
 use Symsonte\Service\CachedInstantiator;
 use Symsonte\Service\ConstructorInstantiator;
 use Symsonte\Service\Container;
-use Symsonte\Service\Declaration;
-use Symsonte\Service\DeductibleContainer;
-use Symsonte\Service\OrdinaryContainer;
-use Symsonte\ServiceKit\Resource\Loader;
 use Symsonte\Service\Declaration\Argument\ServiceProcessor as ServiceArgumentProcessor;
 use Symsonte\Service\Declaration\Call\Processor as CallProcessor;
-use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
-use Symsonte\Http\Server\Request\Resolution\Finder;
-use Symsonte\ServiceKit\Declaration\Bag;
-use Symsonte\Service\Declaration\Storer;
-use Symsonte\Service\Declaration\Call;
 use Symsonte\Service\Declaration\IdStorer;
-use Symsonte\Http\Server\Request\Authorization\Checker;
-use Symsonte\Http\Server\Request\Authentication\Credential\Resolver as CredentialResolver;
-use Symsonte\Http\Server\Request\Authentication\Credential\Processor as CredentialProcessor;
-use Symsonte\Http\Server\Request\Authorization\Role\Collector as RoleCollector;
-use Symsonte\Http\Server\Request\Authentication\Credential\UnresolvableException;
-use Symsonte\Http\Server\Request\Authentication\Credential\InvalidDataException;
+use Symsonte\Service\Declaration\Storer;
+use Symsonte\Service\DeductibleContainer;
+use Symsonte\Service\OrdinaryContainer;
+use Symsonte\ServiceKit\Declaration\Bag;
+use Symsonte\ServiceKit\Resource\Loader;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -81,7 +77,7 @@ class ControllerDispatcher
      * @param RoleCollector       $roleCollector
      * @param Server              $server
      */
-    function __construct(
+    public function __construct(
         Loader $resourceLoader,
         Container $serviceContainer,
         Finder $controllerFinder,
@@ -90,8 +86,7 @@ class ControllerDispatcher
         CredentialProcessor $credentialProcessor,
         RoleCollector $roleCollector,
         Server $server
-    )
-    {
+    ) {
         $this->resourceLoader = $resourceLoader;
         $this->serviceContainer = $serviceContainer;
         $this->controllerFinder = $controllerFinder;
@@ -102,8 +97,6 @@ class ControllerDispatcher
         $this->server = $server;
     }
 
-    /**
-     */
     public function dispatch()
     {
         $request = $this->server->resolveRequest();
@@ -183,7 +176,7 @@ class ControllerDispatcher
             array_merge(
                 $response->getHeaders(),
                 [
-                    'Access-Control-Allow-Origin' => '*'
+                    'Access-Control-Allow-Origin' => '*',
                 ]
             )
         ));
@@ -195,12 +188,12 @@ class ControllerDispatcher
     private function createContainer()
     {
         $bag = $this->resourceLoader->load([
-            'dir' => sprintf("%s/../../../../../../../http", __DIR__),
+            'dir'    => sprintf('%s/../../../../../../../http', __DIR__),
             'filter' => '*.php',
-            'extra' => [
-                'type' => 'annotation',
-                'annotation' => '/^di\\\\controller/'
-            ]
+            'extra'  => [
+                'type'       => 'annotation',
+                'annotation' => '/^di\\\\controller/',
+            ],
         ]);
 
         $declarationStorer = $this->createDeclarationStorer($bag);

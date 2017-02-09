@@ -3,8 +3,8 @@
 namespace Symsonte\Service\Declaration;
 
 use Symsonte\Service\ConstructorDeclaration;
-use Symsonte\Service\Declaration\Storer as DeclarationStorer;
 use Symsonte\Service\Declaration\Call\Storer as CallStorer;
+use Symsonte\Service\Declaration\Storer as DeclarationStorer;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -57,8 +57,7 @@ class ConstructorBuilder
         IdStorer $privateStorer = null,
         TagStorer $tagStorer = null,
         CallStorer $circularCallStorer = null
-    )
-    {
+    ) {
         $this->declarationStorer = $declarationStorer ?: new DeclarationStorer();
         $this->privateStorer = $privateStorer ?: new IdStorer();
         $this->tagStorer = $tagStorer ?: new TagStorer();
@@ -110,13 +109,13 @@ class ConstructorBuilder
         $this->declarationStorer->add(
             new ConstructorDeclaration($this->id, $class)
         );
-        
+
         return $this;
     }
 
     /**
      * @param string $argument
-     * 
+     *
      * @throws \Exception
      *
      * @return $this
@@ -124,7 +123,7 @@ class ConstructorBuilder
     public function theServiceHasAServiceArgument($argument)
     {
         if (!isset($this->id)) {
-            throw new \Exception("You need to add the service first.");
+            throw new \Exception('You need to add the service first.');
         }
 
         $this->declarationStorer->get($this->id)->appendArgument(new ServiceArgument($argument));
@@ -142,7 +141,7 @@ class ConstructorBuilder
     public function theServiceHasAParameterArgument($argument)
     {
         if (!isset($this->id)) {
-            throw new \Exception("You need to add the service first.");
+            throw new \Exception('You need to add the service first.');
         }
 
         $this->declarationStorer->get($this->id)->appendArgument(new ParameterArgument($argument));
@@ -160,7 +159,7 @@ class ConstructorBuilder
     public function theServiceHasATaggedServicesArgument($argument)
     {
         if (!isset($this->id)) {
-            throw new \Exception("You need to add the service first.");
+            throw new \Exception('You need to add the service first.');
         }
 
         $this->declarationStorer->get($this->id)->appendArgument(new TaggedServicesArgument($argument));
@@ -176,25 +175,25 @@ class ConstructorBuilder
     public function theServiceIsPrivate()
     {
         if (!isset($this->id)) {
-            throw new \Exception("You need to add the service first.");
+            throw new \Exception('You need to add the service first.');
         }
 
         $this->privateStorer->add($this->id);
 
         return $this;
     }
-    
+
     /**
      * @throws \Exception
-     * 
+     *
      * @return $this
      */
     public function theServiceIsDisposable()
     {
         if (!isset($this->id)) {
-            throw new \Exception("You need to add the service first.");
+            throw new \Exception('You need to add the service first.');
         }
-        
+
         $this->disposableStorer->add($this->id);
 
         return $this;
@@ -202,7 +201,7 @@ class ConstructorBuilder
 
     /**
      * @param $tag
-     * 
+     *
      * @throws \Exception
      *
      * @return $this
@@ -210,9 +209,9 @@ class ConstructorBuilder
     public function theServiceHasATag($tag)
     {
         if (!isset($this->id)) {
-            throw new \Exception("You need to add the service first.");
+            throw new \Exception('You need to add the service first.');
         }
-        
+
         $this->tagStorer->add($this->id, $tag);
 
         return $this;
@@ -221,14 +220,14 @@ class ConstructorBuilder
     /**
      * @param string $method
      *
-     * @return $this
-     *
      * @throws \Exception
+     *
+     * @return $this
      */
     public function theServiceHasCircularCall($method)
     {
         if (!isset($this->id)) {
-            throw new \Exception("You need to add the service first.");
+            throw new \Exception('You need to add the service first.');
         }
 
         $this->method = $method;
@@ -244,9 +243,9 @@ class ConstructorBuilder
     /**
      * @param string $argument
      *
-     * @return $this
-     *
      * @throws \Exception
+     *
+     * @return $this
      */
     public function theCallHasServiceArgument($argument)
     {

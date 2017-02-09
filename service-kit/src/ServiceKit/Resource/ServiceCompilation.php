@@ -3,8 +3,8 @@
 namespace Symsonte\ServiceKit\Resource;
 
 use Symsonte\Service\ConstructorDeclaration;
-use Symsonte\Service\Declaration\Call;
 use Symsonte\Service\Declaration;
+use Symsonte\Service\Declaration\Call;
 
 class ServiceCompilation
 {
@@ -14,17 +14,17 @@ class ServiceCompilation
     private $declaration;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $deductible;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $private;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $disposable;
 
@@ -41,20 +41,19 @@ class ServiceCompilation
     /**
      * @param Declaration $declaration
      * @param bool        $deductible
-     * @param boolean     $private
+     * @param bool        $private
      * @param bool        $disposable
      * @param array       $tags
      * @param Call[]      $circularCalls
      */
-    function __construct(
+    public function __construct(
         Declaration $declaration,
         $deductible = false,
         $private = false,
         $disposable = false,
         array $tags = [],
         array $circularCalls = []
-    )
-    {
+    ) {
         $this->declaration = $declaration;
         $this->deductible = $deductible;
         $this->private = $private;
@@ -72,7 +71,7 @@ class ServiceCompilation
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeductible()
     {
@@ -80,7 +79,7 @@ class ServiceCompilation
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isPrivate()
     {
@@ -88,7 +87,7 @@ class ServiceCompilation
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDisposable()
     {

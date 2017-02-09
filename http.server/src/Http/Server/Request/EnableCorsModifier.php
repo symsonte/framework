@@ -3,7 +3,6 @@
 namespace Symsonte\Http\Server\Request;
 
 use Symsonte\Http\Server;
-use Symsonte\Http\Server\PostRequest;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>

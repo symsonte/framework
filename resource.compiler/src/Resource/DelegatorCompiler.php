@@ -15,7 +15,7 @@ class DelegatorCompiler implements Compiler
     /**
      * @param Compiler[] $compilers
      */
-    function __construct($compilers = [])
+    public function __construct($compilers = [])
     {
         $this->compilers = $compilers;
     }

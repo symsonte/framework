@@ -12,14 +12,14 @@ namespace Symsonte\Resource;
 class NullCacher implements Cacher
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function store($data, $resource)
     {
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function approve($resource)
     {
@@ -27,10 +27,9 @@ class NullCacher implements Cacher
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function retrieve($resource)
     {
-        return null;
     }
 }

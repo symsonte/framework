@@ -27,7 +27,7 @@ class UnsupportedDataAndResourceException extends \Exception
         $this->resource = $resource;
 
         parent::__construct(sprintf(
-            "Data %s from resource %s is unsupported.",
+            'Data %s from resource %s is unsupported.',
             serialize($data),
             serialize($resource)
         ));

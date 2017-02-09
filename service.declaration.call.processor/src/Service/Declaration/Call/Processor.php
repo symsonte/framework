@@ -15,7 +15,7 @@ class Processor
     /**
      * @param ArgumentProcessor $argumentProcessor
      */
-    function __construct(ArgumentProcessor $argumentProcessor)
+    public function __construct(ArgumentProcessor $argumentProcessor)
     {
         $this->argumentProcessor = $argumentProcessor;
     }
@@ -32,7 +32,7 @@ class Processor
                 $arguments[] = $this->argumentProcessor->process($argument);
             }
 
-            call_user_func_array(array($instance, $call->getMethod()), $arguments);
+            call_user_func_array([$instance, $call->getMethod()], $arguments);
         }
     }
 }

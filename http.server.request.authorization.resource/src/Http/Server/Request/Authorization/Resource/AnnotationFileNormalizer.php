@@ -2,8 +2,8 @@
 
 namespace Symsonte\Http\Server\Request\Authorization\Resource;
 
-use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\AnnotationFileResource;
+use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\UnsupportedDataAndResourceException;
 
 /**

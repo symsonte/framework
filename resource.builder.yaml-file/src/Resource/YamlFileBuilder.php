@@ -52,7 +52,7 @@ class YamlFileBuilder implements Builder
             return true;
         }
 
-        if (!in_array(pathinfo($metadata['file'], PATHINFO_EXTENSION), array('yaml', 'yml'))) {
+        if (!in_array(pathinfo($metadata['file'], PATHINFO_EXTENSION), ['yaml', 'yml'])) {
             return false;
         }
 
@@ -63,6 +63,7 @@ class YamlFileBuilder implements Builder
      * Fixes metadata if it comes as short version.
      *
      * @param array $metadata
+     *
      * @return array
      */
     private function fixMetadata($metadata)

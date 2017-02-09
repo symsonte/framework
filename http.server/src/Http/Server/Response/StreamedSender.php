@@ -31,7 +31,7 @@ class StreamedSender implements Sender
     private function sendHeaders($headers)
     {
         foreach ($headers as $key => $value) {
-            header(sprintf("%s: %s", $key, $value), false);
+            header(sprintf('%s: %s', $key, $value), false);
         }
     }
 }

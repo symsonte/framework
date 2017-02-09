@@ -15,7 +15,7 @@ class DelegatorBuilder implements Builder
     /**
      * @param Builder[] $builders
      */
-    function __construct($builders = [])
+    public function __construct($builders = [])
     {
         $this->builders = $builders;
     }

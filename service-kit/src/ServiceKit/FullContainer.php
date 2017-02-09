@@ -2,14 +2,11 @@
 
 namespace Symsonte\ServiceKit;
 
-use Symsonte\Resource\AnnotationFileBuilder;
-use Symsonte\Resource\Cacher;
-use Symsonte\Resource\DelegatorBuilder;
 use Symsonte\Resource\DelegatorFlatReader;
 use Symsonte\Resource\YamlFileBuilder;
 use Symsonte\Resource\YamlFileFlatReader;
-use Symsonte\ServiceKit\Declaration\Bag;
 use Symsonte\Service\Container;
+use Symsonte\ServiceKit\Declaration\Bag;
 
 class FullContainer implements Container
 {
@@ -25,7 +22,7 @@ class FullContainer implements Container
     public function __construct($parametersFile, $filters = [])
     {
         $flatReader = new DelegatorFlatReader([
-            new YamlFileFlatReader()
+            new YamlFileFlatReader(),
         ]);
 
         $parameters = $flatReader->read(
@@ -34,7 +31,7 @@ class FullContainer implements Container
         foreach ($parameters as $i => $parameter) {
             $parameters[$i] = str_replace('__DIR__', dirname($parametersFile), $parameter);
         }
-        
+
         $bag = new Bag(
             [],
             $parameters
@@ -53,7 +50,7 @@ class FullContainer implements Container
 //
 //            return;
 //        }
-//            
+//
 //        $storer->add($this->container, 'container');
     }
 

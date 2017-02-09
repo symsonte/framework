@@ -30,22 +30,22 @@ class ServiceNormalization
     public $calls;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $deductible;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $private;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $disposable;
 
     /**
-     * @var boolean
+     * @var bool
      */
     public $lazy;
 

@@ -39,7 +39,7 @@ class Declaration
      * @var string[]
      */
     private $aliases;
-    
+
     /**
      * @var Call[]
      */
@@ -62,8 +62,7 @@ class Declaration
         array $tags,
         array $aliases,
         array $circularCalls
-    )
-    {
+    ) {
         $this->declaration = $declaration;
         $this->deductible = $deductible;
         $this->private = $private;
@@ -93,7 +92,7 @@ class Declaration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeductible()
     {
@@ -101,7 +100,7 @@ class Declaration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isPrivate()
     {
@@ -109,7 +108,7 @@ class Declaration
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDisposable()
     {

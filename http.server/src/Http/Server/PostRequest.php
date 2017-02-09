@@ -24,13 +24,12 @@ class PostRequest
      * @param Field[] $fields
      * @param string  $body
      */
-    function __construct(
+    public function __construct(
         $uri,
         $headers,
         $fields,
         $body
-    )
-    {
+    ) {
         $this->uri = $uri;
         $this->headers = $headers;
         $this->fields = $fields;

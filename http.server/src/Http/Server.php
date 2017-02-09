@@ -2,12 +2,12 @@
 
 namespace Symsonte\Http;
 
-use Symsonte\Http\Server\Request\Resolver as RequestResolver;
-use Symsonte\Http\Server\Request\Modifier as RequestModifier;
-use Symsonte\Http\Server\Response\Sender as ResponseSender;
 use Symsonte\Http\Server\GetRequest;
 use Symsonte\Http\Server\PostRequest;
+use Symsonte\Http\Server\Request\Modifier as RequestModifier;
+use Symsonte\Http\Server\Request\Resolver as RequestResolver;
 use Symsonte\Http\Server\Response\Modifier as ResponseModifier;
+use Symsonte\Http\Server\Response\Sender as ResponseSender;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -46,7 +46,7 @@ class Server
      * @var GetRequest|PostRequest
      */
     private $request;
-    
+
     /**
      * @param RequestResolver         $requestResolver
      * @param ResponseSender          $responseSender
@@ -67,13 +67,12 @@ class Server
      *     responseModifiers: '#symsonte.http.server.response.modifier'
      * })
      */
-    function __construct(
+    public function __construct(
         RequestResolver $requestResolver,
         ResponseSender $responseSender,
         array $requestModifiers = null,
         array $responseModifiers = null
-    )
-    {
+    ) {
         $this->requestResolver = $requestResolver;
         $this->responseSender = $responseSender;
         $this->requestModifiers = $requestModifiers ?: [];
@@ -92,7 +91,7 @@ class Server
         foreach ($this->requestModifiers as $modifier) {
             $this->request = $modifier->modify($this->request);
         }
-        
+
         return $this->request;
     }
 

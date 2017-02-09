@@ -73,7 +73,7 @@ class DirSliceReader implements SliceReader
 
         $metadata = array_merge(
             [
-                'file' => $file->getRealPath()
+                'file' => $file->getRealPath(),
             ],
             $iterator->getResource()->getExtra()
         );
@@ -130,4 +130,3 @@ class DirSliceReader implements SliceReader
         );
     }
 }
-

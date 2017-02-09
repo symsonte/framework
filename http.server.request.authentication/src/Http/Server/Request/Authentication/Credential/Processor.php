@@ -9,9 +9,9 @@ interface Processor
     /**
      * @param Credential $credential
      *
-     * @return string The token.
-     *
      * @throws InvalidDataException
+     *
+     * @return string The token.
      */
     public function process(Credential $credential);
 }

@@ -24,6 +24,5 @@ class CircularServiceProcessor implements Processor
      */
     public function process($argument)
     {
-        return null;
     }
 }

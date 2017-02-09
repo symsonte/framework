@@ -26,8 +26,7 @@ class Bag
     public function __construct(
         array $declarations = null,
         array $parameters = null
-    )
-    {
+    ) {
         $this->declarations = $declarations ?: [];
         $this->parameters = $parameters ?: [];
     }

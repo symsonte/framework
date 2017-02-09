@@ -18,7 +18,7 @@ class Storer
     /**
      * @param Declaration[] $declarations
      */
-    function __construct($declarations = [])
+    public function __construct($declarations = [])
     {
         $this->declarations = $declarations;
     }
@@ -50,9 +50,9 @@ class Storer
      *
      * @param $id
      *
-     * @return ConstructorDeclaration
-     *
      * @throws NonexistentDeclarationException if declaration does not exist
+     *
+     * @return ConstructorDeclaration
      */
     public function get($id)
     {

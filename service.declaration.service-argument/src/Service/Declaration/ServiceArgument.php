@@ -15,7 +15,7 @@ class ServiceArgument implements Argument
     /**
      * @param string $id
      */
-    function __construct($id)
+    public function __construct($id)
     {
         $this->id = $id;
     }

@@ -2,8 +2,8 @@
 
 namespace Symsonte\ServiceKit\Resource\Service;
 
-use Symsonte\Resource\YamlFileResource;
 use Symsonte\Resource\Normalizer;
+use Symsonte\Resource\YamlFileResource;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>

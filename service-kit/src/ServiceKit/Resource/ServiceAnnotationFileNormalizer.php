@@ -39,14 +39,14 @@ class ServiceAnnotationFileNormalizer implements Normalizer
         $declaration->disposable = isset($data['value']['class'][0]['value']['disposable']) ? $data['value']['class'][0]['value']['disposable'] : false;
         $declaration->lazy = isset($data['value']['class'][0]['value']['lazy']) ? $data['value']['class'][0]['value']['lazy'] : false;
         $declaration->circularCalls = isset($data['value']['class'][0]['value']['circularCalls']) ? $data['value']['class'][0]['value']['circularCalls'] : [];
-        
+
         $tags = [];
         if (isset($data['value']['class'][0]['value']['tags'])) {
             foreach ($data['value']['class'][0]['value']['tags'] as $tag) {
                 if (is_string($tag)) {
-                    $tags[] = array(
-                        'name' => $tag
-                    );
+                    $tags[] = [
+                        'name' => $tag,
+                    ];
                 } else {
                     $tags[] = $tag;
                 }

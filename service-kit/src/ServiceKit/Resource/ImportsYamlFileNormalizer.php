@@ -3,8 +3,8 @@
 namespace Symsonte\ServiceKit\Resource;
 
 use Symsonte\Resource\Normalizer;
-use Symsonte\Resource\YamlFileResource;
 use Symsonte\Resource\UnsupportedDataAndResourceException;
+use Symsonte\Resource\YamlFileResource;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -25,9 +25,9 @@ class ImportsYamlFileNormalizer implements Normalizer
      * @param array            $data
      * @param YamlFileResource $resource
      *
-     * @return ImportsNormalization
-     *
      * @throws UnsupportedDataAndResourceException
+     *
+     * @return ImportsNormalization
      */
     public function normalize($data, $resource)
     {

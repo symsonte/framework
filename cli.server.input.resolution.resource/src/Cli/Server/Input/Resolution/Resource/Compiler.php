@@ -2,9 +2,8 @@
 
 namespace Symsonte\Cli\Server\Input\Resolution\Resource;
 
-use Symsonte\Cli\Server\Input\Resolution;
 use Symsonte\Cli\Server\Input\FirstParameterMatch;
-use Symsonte\Service\Declaration\Call;
+use Symsonte\Cli\Server\Input\Resolution;
 use Symsonte\Resource\Compiler as BaseComposer;
 use Symsonte\Resource\UnsupportedNormalizationException;
 
@@ -26,9 +25,9 @@ class Compiler implements BaseComposer
     /**
      * @param Normalization $normalization
      *
-     * @return Compilation
-     *
      * @throws UnsupportedNormalizationException
+     *
+     * @return Compilation
      */
     public function compile($normalization)
     {

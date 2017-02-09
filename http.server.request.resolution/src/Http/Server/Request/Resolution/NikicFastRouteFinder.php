@@ -2,15 +2,14 @@
 
 namespace Symsonte\Http\Server\Request\Resolution;
 
-use FastRoute\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
 use FastRoute\DataGenerator\GroupCountBased as GroupCountBasedDataGenerator;
+use FastRoute\Dispatcher\GroupCountBased as GroupCountBasedDispatcher;
+use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
 use Symsonte\Http\Server\GetRequest;
 use Symsonte\Http\Server\PostRequest;
 use Symsonte\Http\Server\Request\MethodMatch;
-use Symsonte\Http\Server\Request\Resolution;
 use Symsonte\Http\Server\Request\UriMatch;
-use FastRoute\RouteCollector;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -30,9 +29,7 @@ class NikicFastRouteFinder implements Finder
      */
     private $collector;
 
-    /**
-     */
-    function __construct()
+    public function __construct()
     {
         $this->collector = new RouteCollector(
             new Std(),

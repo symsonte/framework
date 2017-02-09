@@ -8,15 +8,11 @@ namespace Symsonte\Event;
 interface Notifier
 {
     /**
-     * @param mixed  $listener
+     * @param mixed $listener
      */
     public function subscribe($listener);
 
-    /**
-     */
     public function start();
 
-    /**
-     */
     public function stop();
 }

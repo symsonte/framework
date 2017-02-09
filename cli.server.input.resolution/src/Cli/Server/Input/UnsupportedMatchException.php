@@ -20,7 +20,7 @@ class UnsupportedMatchException extends \Exception
         $this->match = $match;
 
         parent::__construct(sprintf(
-            "Match %s unsupported.",
+            'Match %s unsupported.',
             serialize($match)
         ));
     }

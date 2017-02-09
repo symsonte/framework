@@ -44,8 +44,7 @@ class AnnotationFileSliceReader implements SliceReader
     public function __construct(
         DataSliceReader $reader,
         DocParser $parser
-    )
-    {
+    ) {
         $this->reader = $reader;
         $this->parser = $parser;
     }
@@ -64,20 +63,20 @@ class AnnotationFileSliceReader implements SliceReader
         }
 
         try {
-            $data = $this->getData($resource->getFile() , $resource->getAnnotation());
+            $data = $this->getData($resource->getFile(), $resource->getAnnotation());
         } catch (\Exception $e) {
             throw new InvalidResourceException($resource, $e->getMessage(), null, $e);
         }
 
         $iterator = $this->reader->init(new DataResource($data));
 
-        // TODO: Implement a lazy iterator, because this way the reader takes too much time reading annotation, just for 
+        // TODO: Implement a lazy iterator, because this way the reader takes too much time reading annotation, just for
         // cache purposes on FileModificationTimeApprover
         return new AnnotationFileSliceIterator($iterator);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function current($iterator)
     {
@@ -89,7 +88,7 @@ class AnnotationFileSliceReader implements SliceReader
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function next($iterator)
     {
@@ -101,7 +100,7 @@ class AnnotationFileSliceReader implements SliceReader
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function close($iterator)
     {
@@ -115,6 +114,7 @@ class AnnotationFileSliceReader implements SliceReader
     /**
      * @param string $file
      * @param string $annotation
+     *
      * @return array
      */
     private function getData($file, $annotation)
@@ -125,8 +125,8 @@ class AnnotationFileSliceReader implements SliceReader
             return [];
         }
 
-        return array(
-            0 => $data
-        );
+        return [
+            0 => $data,
+        ];
     }
 }
