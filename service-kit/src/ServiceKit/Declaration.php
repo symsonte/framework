@@ -3,6 +3,7 @@
 namespace Symsonte\ServiceKit;
 
 use Symsonte\Service\Declaration as InternalDeclaration;
+use Symsonte\Service\Declaration\Call;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -38,6 +39,11 @@ class Declaration
      * @var string[]
      */
     private $aliases;
+    
+    /**
+     * @var Call[]
+     */
+    private $circularCalls;
 
     /**
      * @param InternalDeclaration $declaration
@@ -46,6 +52,7 @@ class Declaration
      * @param bool                $disposable
      * @param string[]            $tags
      * @param string[]            $aliases
+     * @param Call[]              $circularCalls
      */
     public function __construct(
         InternalDeclaration $declaration,
@@ -53,7 +60,8 @@ class Declaration
         $private,
         $disposable,
         array $tags,
-        array $aliases
+        array $aliases,
+        array $circularCalls
     )
     {
         $this->declaration = $declaration;
@@ -62,6 +70,7 @@ class Declaration
         $this->disposable = $disposable;
         $this->tags = $tags;
         $this->aliases = $aliases;
+        $this->circularCalls = $circularCalls;
     }
 
     /**
@@ -72,7 +81,7 @@ class Declaration
     public function is($id)
     {
         return $this->declaration->getId() === $id
-        || isset($this->aliases[$id]);
+        || isset($this->circularCalls[$id]);
     }
 
     /**
@@ -121,5 +130,13 @@ class Declaration
     public function getAliases()
     {
         return $this->aliases;
+    }
+
+    /**
+     * @return Call[]
+     */
+    public function getCircularCalls()
+    {
+        return $this->circularCalls;
     }
 }

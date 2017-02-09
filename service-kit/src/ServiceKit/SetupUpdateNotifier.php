@@ -18,7 +18,7 @@ class SetupUpdateNotifier
      * @param Updater[]|null $updaters
      *
      * @ds\arguments({
-     *     connector: '#symsonte.service_kit.setup_update'
+     *     updaters: '#symsonte.service_kit.setup_update'
      * })
      */
     public function __construct(array $updaters = null)

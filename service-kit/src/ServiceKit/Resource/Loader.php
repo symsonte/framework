@@ -115,7 +115,8 @@ class Loader
                         $compilation->isPrivate(),
                         $compilation->isDisposable(),
                         $compilation->getTags(),
-                        []
+                        [],
+                        $compilation->getCircularCalls()
                     )
                 );
             } elseif ($compilation instanceof AliasesCompilation) {

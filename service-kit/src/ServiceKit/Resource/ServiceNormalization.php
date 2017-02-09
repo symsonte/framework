@@ -53,4 +53,9 @@ class ServiceNormalization
      * @var string[]
      */
     public $tags;
+
+    /**
+     * @var CallNormalization[]
+     */
+    public $circularCalls;
 }

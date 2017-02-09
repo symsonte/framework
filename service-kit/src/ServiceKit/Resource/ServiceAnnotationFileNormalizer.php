@@ -38,7 +38,22 @@ class ServiceAnnotationFileNormalizer implements Normalizer
         $declaration->private = isset($data['value']['class'][0]['value']['private']) ? $data['value']['class'][0]['value']['private'] : false;
         $declaration->disposable = isset($data['value']['class'][0]['value']['disposable']) ? $data['value']['class'][0]['value']['disposable'] : false;
         $declaration->lazy = isset($data['value']['class'][0]['value']['lazy']) ? $data['value']['class'][0]['value']['lazy'] : false;
-        $declaration->tags = isset($data['value']['class'][0]['value']['tags']) ? $data['value']['class'][0]['value']['tags'] : [];
+        $declaration->circularCalls = isset($data['value']['class'][0]['value']['circularCalls']) ? $data['value']['class'][0]['value']['circularCalls'] : [];
+        
+        $tags = [];
+        if (isset($data['value']['class'][0]['value']['tags'])) {
+            foreach ($data['value']['class'][0]['value']['tags'] as $tag) {
+                if (is_string($tag)) {
+                    $tags[] = array(
+                        'name' => $tag
+                    );
+                } else {
+                    $tags[] = $tag;
+                }
+            }
+        }
+
+        $declaration->tags = $tags;
 
         return $declaration;
     }

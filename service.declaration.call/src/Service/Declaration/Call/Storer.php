@@ -28,7 +28,7 @@ class Storer
      * @param string $id
      * @param Call   $call
      */
-    public function add($id, $call)
+    public function add($id, Call $call)
     {
         $this->calls[$id][$call->getMethod()] = $call;
     }

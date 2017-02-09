@@ -93,6 +93,8 @@ class DirModificationTimeApprover implements Approver
             throw new UnsupportedResourceException($resource);
         }
 
+        // TODO: Implement a workaround for empty dirs
+
         $iterator = $this->reader->init($resource);
         while ($fileResource = $this->reader->current($iterator)) {
             if ($this->approver->approve($fileResource) === false) {

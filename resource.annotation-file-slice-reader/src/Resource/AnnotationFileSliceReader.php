@@ -71,6 +71,8 @@ class AnnotationFileSliceReader implements SliceReader
 
         $iterator = $this->reader->init(new DataResource($data));
 
+        // TODO: Implement a lazy iterator, because this way the reader takes too much time reading annotation, just for 
+        // cache purposes on FileModificationTimeApprover
         return new AnnotationFileSliceIterator($iterator);
     }
 

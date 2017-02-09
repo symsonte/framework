@@ -3,7 +3,14 @@
 namespace Symsonte\Resource;
 
 use Composer\Autoload\ClassLoader;
+use PhpParser\Comment\Doc;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Property;
 use Symfony\Component\Yaml\Yaml;
+use PhpParser\ParserFactory;
+use PhpParser\Error;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -24,66 +31,107 @@ class YamlDocParser implements DocParser
     public function parse($file, $name = null)
     {
         $data = [];
-        $class = $this->findClass($file);
+        
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
-        if ($class !== false) {
-            // TODO: Handle exception when a class can't be required because it needs a nonexistent interface or class
-            if (strpos($class, 'Symfony') !== false
-                || strpos($class, 'Foo') !== false
-                || strpos($class, 'Bar') !== false
-                || strpos($class, 'Test') !== false
-                || strpos($class, 'Aura\Cli\_Config') !== false
-            ) {
+        try {
+            $nodes = $parser->parse(file_get_contents($file));
+            /** @var Namespace_ $namespace */
+            if (isset($nodes[0])) {
+                $namespace = $nodes[0];
+                if ($namespace instanceof Namespace_) {
+                    foreach ($namespace->stmts as $node) {
+                        if ($node instanceof Class_) {
+                            if ($namespace->name === null) {
+                                // Ignore files like this symfony/symfony/src/Symfony/Component/ClassLoader/Tests/Fixtures/php5.4/traits.php
+                                continue;
+                            }
+
+                            $className = sprintf(
+                                '%s\\%s',
+                                implode('\\', $namespace->name->parts),
+                                $node->name
+                            );
+
+                            $doc = $node->getAttribute('comments', '');
+                            if ($doc !== '') {
+                                /** @var Doc $doc */
+                                $doc = $doc[0];
+                                $annotations = $this->resolveAnnotations($doc->getText());
+                                foreach ($annotations as $annotation) {
+                                    if (!$name || preg_match($name, $annotation['key'])) {
+                                        $data['class'][] = array(
+                                            'class' => $className,
+                                            'key' => $annotation['key'],
+                                            'value' => (array) Yaml::parse($annotation['value']),
+                                            'metadata' => array(
+                                                'class' => $className
+                                            )
+                                        );
+                                    }
+                                }
+                            }
+
+                            foreach ($node->stmts as $child) {
+                                if ($child instanceof Property) {
+                                    $doc = $child->getAttribute('comments', '');
+
+                                    if ($doc !== '') {
+                                        /** @var Doc $doc */
+                                        $doc = $doc[0];
+
+                                        $annotations = $this->resolveAnnotations($doc->getText());
+                                        foreach ($annotations as $annotation) {
+                                            if (!$name || preg_match($name, $annotation['key'])) {
+                                                $data['properties'][] = array(
+                                                    'property' => $child->name,
+                                                    'key' => $annotation['key'],
+                                                    'value' => (array) Yaml::parse($annotation['value']),
+                                                    'metadata' => array(
+                                                        'class' => $className
+                                                    )
+                                                );
+                                            }
+                                        }
+                                    }
+                                } elseif ($child instanceof ClassMethod) {
+                                    $doc = $child->getAttribute('comments', '');
+
+                                    if ($doc !== '') {
+                                        /** @var Doc $doc */
+                                        $doc = $doc[0];
+
+                                        $annotations = $this->resolveAnnotations($doc->getText());
+                                        foreach ($annotations as $annotation) {
+                                            if (!$name || preg_match($name, $annotation['key'])) {
+                                                $data['method'][] = array(
+                                                    'method' => $child->name,
+                                                    'key' => $annotation['key'],
+                                                    'value' => (array) Yaml::parse($annotation['value']),
+                                                    'metadata' => array(
+                                                        'class' => $className
+                                                    )
+                                                );
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    // It cloud be a class constant
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // TODO: Implement case for class with no namespace
+                    return $data;
+                }
+            } else {
+                // Ignore files like this symfony/symfony/src/Symfony/Component/Routing/Tests/Fixtures/annotated.php
                 return $data;
             }
-
-            $ref = new \ReflectionClass($class);
-
-            $annotations = $this->resolveAnnotations($ref->getDocComment());
-            foreach ($annotations as $annotation) {
-                if (!$name || preg_match($name, $annotation['key'])) {
-                    $data['class'][] = array(
-                        'class' => $class,
-                        'key' => $annotation['key'],
-                        'value' => (array) Yaml::parse($annotation['value']),
-                        'metadata' => array(
-                            'class' => $class
-                        )
-                    );
-                }
-            }
-
-            foreach ($ref->getProperties() as $property) {
-                $annotations = $this->resolveAnnotations($property->getDocComment());
-                foreach ($annotations as $annotation) {
-                    if (!$name || preg_match($name, $annotation['key'])) {
-                        $data['properties'][] = array(
-                            'property' => $property->getName(),
-                            'key' => $annotation['key'],
-                            'value' => (array) Yaml::parse($annotation['value']),
-                            'metadata' => array(
-                                'class' => $class
-                            )
-                        );
-                    }
-                }
-            }
-
-            foreach ($ref->getMethods() as $method) {
-                $annotations = $this->resolveAnnotations($method->getDocComment());
-                foreach ($annotations as $annotation) {
-                    if (!$name || preg_match($name, $annotation['key'])) {
-                        $data['method'][] = array(
-                            'method' => $method->getName(),
-                            'key' => $annotation['key'],
-                            'value' => (array) Yaml::parse($annotation['value']),
-                            'metadata' => array(
-                                'class' => $class
-                            )
-                        );
-                    }
-                }
-            }
+        } catch (Error $e) {
+            // Ignore files with bad syntax
         }
 
         return $data;

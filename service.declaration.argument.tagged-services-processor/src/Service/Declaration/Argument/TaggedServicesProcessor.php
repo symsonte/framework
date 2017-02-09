@@ -52,8 +52,8 @@ class TaggedServicesProcessor implements Processor
 
         $instances = [];
         $ids = $this->storer->get($argument->getTag());
-        foreach ($ids as $id) {
-            $instances[] = $this->container->get($id);
+        foreach ($ids as $key => $id) {
+            $instances[$key] = $this->container->get($id);
         }
 
         return $instances;
