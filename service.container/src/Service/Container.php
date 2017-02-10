@@ -21,10 +21,10 @@ interface Container
      *
      * @param string $id
      *
-     * @return object
-     *
      * @throws NonexistentServiceException     if the service does not exist
      * @throws NonInstantiableServiceException if the service can't be instantiable
+     *
+     * @return object
      */
     public function get($id);
 }

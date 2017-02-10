@@ -14,9 +14,9 @@ interface Processor
      *
      * @param mixed $argument
      *
-     * @return mixed
-     *
      * @throws UnsupportedArgumentException if given argument is not supported.
+     *
+     * @return mixed
      */
     public function process($argument);
 }

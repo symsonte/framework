@@ -28,15 +28,14 @@ class ParameterBuilder implements Builder
 
     /**
      * @param YamlFileFlatReader $reader
-     * @param YamlFileBuilder $builder
-     * @param string $parametersFile
+     * @param YamlFileBuilder    $builder
+     * @param string             $parametersFile
      */
     public function __construct(
         YamlFileFlatReader $reader,
         YamlFileBuilder $builder,
         $parametersFile
-    )
-    {
+    ) {
         $this->reader = $reader;
         $this->builder = $builder;
         $this->parametersFile = $parametersFile;

@@ -24,15 +24,15 @@ class ServiceCompiler implements Compiler
      */
     public function compile($argument)
     {
-        if ($argument[0] != "@") {
+        if ($argument[0] != '@') {
             throw new UnsupportedArgumentException($argument);
         }
 
         $optional = false;
-        if ($argument[1] == "?") {
+        if ($argument[1] == '?') {
             $optional = true;
         }
-        
+
         return new ServiceArgument(substr($argument, 1), $optional);
     }
 }

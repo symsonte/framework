@@ -45,9 +45,9 @@ class AuthorizationResolver
     }
 
     /**
-     * @return AuthorizationCredential
-     *
      * @throws UnresolvableException
+     *
+     * @return AuthorizationCredential
      */
     public function resolve()
     {

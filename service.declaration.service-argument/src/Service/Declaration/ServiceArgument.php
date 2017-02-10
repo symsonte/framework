@@ -36,7 +36,7 @@ class ServiceArgument implements Argument
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isOptional()
     {

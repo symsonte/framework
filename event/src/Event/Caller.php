@@ -10,7 +10,7 @@ interface Caller
     /**
      * Returns whether given listener is supported.
      *
-     * @param mixed  $listener
+     * @param mixed $listener
      *
      * @return bool true if listener is supported, false otherwise
      */

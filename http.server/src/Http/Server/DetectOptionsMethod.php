@@ -7,5 +7,4 @@ namespace Symsonte\Http\Server;
  */
 class DetectOptionsMethod
 {
-
 }

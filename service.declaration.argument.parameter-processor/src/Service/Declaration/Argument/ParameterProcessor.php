@@ -18,7 +18,7 @@ class ParameterProcessor implements Processor
     /**
      * @param ParameterStorer $storer
      */
-    function __construct(ParameterStorer $storer)
+    public function __construct(ParameterStorer $storer)
     {
         $this->storer = $storer;
     }
@@ -26,9 +26,9 @@ class ParameterProcessor implements Processor
     /**
      * @param ParameterArgument $argument
      *
-     * @return mixed
-     *
      * @throws UnsupportedArgumentException if the argument is not supported.
+     *
+     * @return mixed
      */
     public function process($argument)
     {

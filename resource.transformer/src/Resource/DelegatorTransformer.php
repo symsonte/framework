@@ -19,7 +19,7 @@ class DelegatorTransformer implements Transformer
     {
         // Check type
         array_map(
-            function($transformer) {
+            function ($transformer) {
                 if (!$transformer instanceof Transformer) {
                     throw new \InvalidArgumentException('All transformers must implement "Symsonte\Resource\Iterator\Transformer".');
                 }

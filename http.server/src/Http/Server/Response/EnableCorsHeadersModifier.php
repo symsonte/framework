@@ -34,7 +34,7 @@ class EnableCorsHeadersModifier implements HeadersModifier
     {
         $this->headerSearcher = $headerSearcher;
     }
-    
+
     /**
      * {@inheritdoc}
      */

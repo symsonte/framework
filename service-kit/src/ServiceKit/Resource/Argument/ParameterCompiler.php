@@ -24,7 +24,7 @@ class ParameterCompiler implements Compiler
      */
     public function compile($argument)
     {
-        if ($argument[0] != "%" || $argument[strlen($argument) - 1] != "%") {
+        if ($argument[0] != '%' || $argument[strlen($argument) - 1] != '%') {
             throw new UnsupportedArgumentException($argument);
         }
 

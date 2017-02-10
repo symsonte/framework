@@ -12,7 +12,7 @@ class DelegatorMatcher implements Matcher
     /**
      * @param Matcher[]|null $matchers
      */
-    function __construct(array $matchers = [])
+    public function __construct(array $matchers = [])
     {
         $this->matchers = $matchers;
     }

@@ -17,7 +17,7 @@ class Storer
     /**
      * @param Call[][] $calls
      */
-    function __construct($calls = [])
+    public function __construct($calls = [])
     {
         $this->calls = $calls;
     }
@@ -54,9 +54,9 @@ class Storer
      * @param string $id
      * @param string $method
      *
-     * @return Call
-     *
      * @throws \Exception
+     *
+     * @return Call
      */
     public function get($id, $method)
     {

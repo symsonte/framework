@@ -3,10 +3,9 @@
 namespace Symsonte\ServiceKit\Resource\Cacher;
 
 use Symsonte\Resource\Cacher\Approver;
-use Symsonte\Resource\DirSliceReader;
-use Symsonte\Resource\Builder;
-use Symsonte\Resource\Storer;
 use Symsonte\Resource\DirResource;
+use Symsonte\Resource\DirSliceReader;
+use Symsonte\Resource\Storer;
 use Symsonte\Resource\UnsupportedResourceException;
 
 /**
@@ -60,8 +59,7 @@ class DirModificationTimeApprover implements Approver
         DirSliceReader $reader,
         Storer $storer,
         FileModificationTimeApprover $approver
-    )
-    {
+    ) {
         $this->reader = $reader;
         $this->storer = $storer;
         $this->approver = $approver;

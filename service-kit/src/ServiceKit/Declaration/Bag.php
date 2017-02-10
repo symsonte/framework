@@ -26,8 +26,7 @@ class Bag
     public function __construct(
         array $declarations = null,
         array $parameters = null
-    )
-    {
+    ) {
         $this->declarations = $declarations ?: [];
         $this->parameters = $parameters ?: [];
     }
@@ -53,9 +52,9 @@ class Bag
     /**
      * @param string $id
      *
-     * @return Declaration
-     *
      * @throws \Exception
+     *
+     * @return Declaration
      */
     public function getDeclaration($id)
     {

@@ -8,7 +8,7 @@ namespace Symsonte\Event;
 class CallableCaller implements Caller
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function support($listener)
     {

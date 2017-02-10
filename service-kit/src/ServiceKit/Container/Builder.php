@@ -2,31 +2,31 @@
 
 namespace Symsonte\ServiceKit\Container;
 
-use Symsonte\Service\CircularContainer;
-use Symsonte\Service\Container as BaseContainer;
-use Symsonte\ServiceKit\Declaration\Bag;
+use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
 use Symsonte\Service\AliasContainer;
 use Symsonte\Service\CachedInstantiator;
+use Symsonte\Service\CircularContainer;
 use Symsonte\Service\ConstructorInstantiator;
+use Symsonte\Service\Container as BaseContainer;
+use Symsonte\Service\Declaration\AliasStorer;
 use Symsonte\Service\Declaration\Argument\DelegatorProcessor;
 use Symsonte\Service\Declaration\Argument\ObjectProcessor;
-use Symsonte\Service\Declaration\Argument\ServiceProcessor as ServiceArgumentProcessor;
 use Symsonte\Service\Declaration\Argument\ParameterProcessor as ParameterArgumentProcessor;
 use Symsonte\Service\Declaration\Argument\ScalarProcessor as ScalarArgumentProcessor;
+use Symsonte\Service\Declaration\Argument\ServiceProcessor as ServiceArgumentProcessor;
 use Symsonte\Service\Declaration\Argument\TaggedServicesProcessor;
 use Symsonte\Service\Declaration\Call\Processor as CallProcessor;
 use Symsonte\Service\Declaration\Call\Storer as CallStorer;
 use Symsonte\Service\Declaration\IdStorer;
 use Symsonte\Service\Declaration\ParameterStorer;
+use Symsonte\Service\Declaration\Storer;
+use Symsonte\Service\Declaration\TagStorer;
 use Symsonte\Service\DeductibleContainer;
 use Symsonte\Service\DelegatorContainer;
 use Symsonte\Service\ObjectContainer;
 use Symsonte\Service\ObjectStorer;
 use Symsonte\Service\OrdinaryContainer;
-use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
-use Symsonte\Service\Declaration\Storer;
-use Symsonte\Service\Declaration\AliasStorer;
-use Symsonte\Service\Declaration\TagStorer;
+use Symsonte\ServiceKit\Declaration\Bag;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -52,7 +52,7 @@ class Builder
             $taggedServicesArgumentProcessor,
             $parameterArgumentProcessor,
             $objectArgumentProcessor,
-            $scalarArgumentProcessor
+            $scalarArgumentProcessor,
         ]);
         $callProcessor = new CallProcessor($argumentProcessor);
         $declarationStorer = $this->createDeclarationStorer($bag);
@@ -79,7 +79,7 @@ class Builder
                 $this->createCircularCallStorer($bag),
                 $callProcessor
             ),
-            $objectContainer
+            $objectContainer,
         ]);
         $objectContainer->add('symsonte.service_kit.container', $container);
         $serviceArgumentProcessor->setContainer($container);

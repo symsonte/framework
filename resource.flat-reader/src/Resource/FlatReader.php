@@ -10,10 +10,10 @@ interface FlatReader
     /**
      * @param mixed $resource
      *
-     * @return mixed The data.
-     *
      * @throws UnsupportedResourceException If given resource is not supported
      * @throws InvalidResourceException     If given resource is invalid
+     *
+     * @return mixed The data.
      */
     public function read($resource);
 }

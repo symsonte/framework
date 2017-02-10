@@ -24,8 +24,7 @@ class FilesSliceIterator
     public function __construct(
         DirSliceIterator $iterator,
         \Iterator $fileIterator
-    )
-    {
+    ) {
         $this->dirSliceIterator = $iterator;
         $this->fileIterator = $fileIterator;
     }

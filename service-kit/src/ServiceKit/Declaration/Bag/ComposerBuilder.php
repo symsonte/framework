@@ -4,11 +4,11 @@ namespace Symsonte\ServiceKit\Declaration\Bag;
 
 use Composer\Autoload\ClassLoader;
 use Symsonte\Resource\Builder as ResourceBuilder;
+use Symsonte\Service\ConstructorDeclaration;
 use Symsonte\Service\Declaration\ScalarArgument;
 use Symsonte\Service\Declaration\ServiceArgument;
 use Symsonte\ServiceKit\Declaration;
 use Symsonte\ServiceKit\Declaration\Bag;
-use Symsonte\Service\ConstructorDeclaration;
 use Symsonte\ServiceKit\Resource\Loader;
 
 /**
@@ -47,8 +47,7 @@ class ComposerBuilder
         Loader $loader,
         $cacheDir,
         array $filters
-    )
-    {
+    ) {
         $this->builder = $builder;
         $this->loader = $loader;
         $this->cacheDir = $cacheDir;
@@ -61,7 +60,7 @@ class ComposerBuilder
     public function build()
     {
         /** @var ClassLoader $classLoader */
-        $classLoader = include(sprintf("%s/../../../../../../../autoload.php", __DIR__));
+        $classLoader = include sprintf('%s/../../../../../../../autoload.php', __DIR__);
 
         $bag = new Bag();
         foreach (array_merge($classLoader->getPrefixes(), $classLoader->getPrefixesPsr4()) as $namespace => $dirs) {
@@ -83,12 +82,12 @@ class ComposerBuilder
 
             foreach ($dirs as $i => $dir) {
                 $metadata = [
-                    'dir' => $dir,
+                    'dir'    => $dir,
                     'filter' => '*.php',
-                    'extra' => [
-                        'type' => 'annotation',
-                        'annotation' => '/^ds\\\\/'
-                    ]
+                    'extra'  => [
+                        'type'       => 'annotation',
+                        'annotation' => '/^ds\\\\/',
+                    ],
                 ];
 
                 $internalBag = new Bag(
@@ -123,7 +122,7 @@ class ComposerBuilder
                                     'Symsonte\ServiceKit\Declaration\Bag\DirsBuilder',
                                     [
                                         new ServiceArgument('symsonte.service_kit.resource.loader'),
-                                        new ScalarArgument($dirs)
+                                        new ScalarArgument($dirs),
                                     ]
                                 ),
                                 false,
@@ -132,7 +131,7 @@ class ComposerBuilder
                                 ['symsonte.service_kit.declaration.bag.builder'],
                                 [],
                                 []
-                            )
+                            ),
                         ]
                     )
                 );
@@ -144,7 +143,7 @@ class ComposerBuilder
                     $internalBag->getDeclarations()
                 ),
                 [
-                    'cache_dir' => $this->cacheDir
+                    'cache_dir' => $this->cacheDir,
                 ]
             );
         }

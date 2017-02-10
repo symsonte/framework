@@ -5,9 +5,9 @@ namespace Symsonte\Http\Server\Request\Authentication\Credential;
 interface Processor
 {
     /**
-     * @return string The token.
-     *
      * @throws InvalidDataException
+     *
+     * @return string The token.
      */
     public function process();
 }

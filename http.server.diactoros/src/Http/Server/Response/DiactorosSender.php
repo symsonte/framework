@@ -13,7 +13,7 @@ use Zend\Diactoros\Stream;
  * @ds\service({
  *     private: true
  * })
- * 
+ *
  * @di\service({
  *     private: true
  * })
@@ -43,7 +43,7 @@ class DiactorosSender implements Sender
         $stream->rewind();
 
         $response = new Response($stream, $status, $headers);
-        
+
         $this->emitter->emit($response);
     }
 }

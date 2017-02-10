@@ -38,10 +38,9 @@ class Server
      *     inputResolver: '@symsonte.cli.server.input.aura_resolver'
      * })
      */
-    function __construct(
+    public function __construct(
         InputResolver $inputResolver
-    )
-    {
+    ) {
         $this->inputResolver = $inputResolver;
     }
 
@@ -56,5 +55,4 @@ class Server
 
         return $this->input;
     }
-
 }

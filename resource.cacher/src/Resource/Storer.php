@@ -18,17 +18,17 @@ interface Storer
     /**
      * Returns whether storer has data for given resource.
      *
-     * @param  mixed   $resource
+     * @param mixed $resource
      *
-     * @return boolean True if the storer has the data for given resource, false
-     *                 otherwise
+     * @return bool True if the storer has the data for given resource, false
+     *              otherwise
      */
     public function has($resource);
 
     /**
      * Gets data for given resource.
      *
-     * @param  mixed $resource
+     * @param mixed $resource
      *
      * @return mixed The resource data
      */

@@ -15,7 +15,7 @@ class DelegatorContainer implements Container
     /**
      * @param Container[] $containers
      */
-    function __construct($containers)
+    public function __construct($containers)
     {
         $this->containers = $containers;
     }

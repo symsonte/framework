@@ -19,11 +19,11 @@ class FactoryInstantiator
      * @param string $method
      * @param array  $arguments
      *
-     * @return object
-     *
-     * @throws NonexistentClassException if class does not exist
+     * @throws NonexistentClassException  if class does not exist
      * @throws NonexistentMethodException if method does not exist
      * @throws \ReflectionException
+     *
+     * @return object
      */
     public function instantiate($class, $method, $arguments = [])
     {

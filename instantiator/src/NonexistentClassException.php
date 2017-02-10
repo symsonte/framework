@@ -10,9 +10,9 @@ class NonexistentClassException extends \InvalidArgumentException
     /**
      * @param string $class
      */
-    function __construct($class)
+    public function __construct($class)
     {
-        parent::__construct(sprintf("Class \"%s\" was not found.", $class));
+        parent::__construct(sprintf('Class "%s" was not found.', $class));
 
         $this->class = $class;
     }

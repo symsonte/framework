@@ -27,11 +27,10 @@ class LazyInstantiator implements Instantiator
      * @param Storer       $storer
      * @param Instantiator $instantiator
      */
-    function __construct(
+    public function __construct(
         Storer $storer,
         Instantiator $instantiator
-    )
-    {
+    ) {
         $this->storer = $storer;
         $this->instantiator = $instantiator;
     }
@@ -48,9 +47,9 @@ class LazyInstantiator implements Instantiator
     /**
      * @param ConstructorDeclaration $declaration
      *
-     * @return VirtualProxyInterface
-     *
      * @throws UnsupportedDeclarationException if the declaration is not supported
+     *
+     * @return VirtualProxyInterface
      */
     public function instantiate($declaration)
     {

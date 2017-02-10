@@ -25,7 +25,7 @@ class EnableCorsHeadersModifier implements HeadersModifier
     {
         $this->headerSearcher = $headerSearcher;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -33,7 +33,7 @@ class EnableCorsHeadersModifier implements HeadersModifier
     {
         $headers[HeaderSearcher::KET_ACCESS_CONTROL_ALLOW_ORIGIN] = '*';
         $headers[HeaderSearcher::KET_ACCESS_CONTROL_ALLOW_CREDENTIALS] = 'true';
-            
+
         return $headers;
     }
 }

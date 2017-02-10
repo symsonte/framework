@@ -23,13 +23,11 @@ class Connector
      *     connector: '#symsonte.assembly.worker'
      * })
      */
-    function __construct($workers)
+    public function __construct($workers)
     {
         $this->workers = $workers;
     }
 
-    /**
-     */
     public function connect()
     {
         foreach ($this->workers as $i => $worker) {

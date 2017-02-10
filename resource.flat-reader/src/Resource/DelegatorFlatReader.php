@@ -15,7 +15,7 @@ class DelegatorFlatReader implements FlatReader
     /**
      * @param FlatReader[] $flatReaders
      */
-    function __construct($flatReaders = [])
+    public function __construct($flatReaders = [])
     {
         $this->flatReaders = $flatReaders;
     }

@@ -15,11 +15,11 @@ class NonexistentParameterException extends \InvalidArgumentException
     /**
      * @param string $key
      */
-    function __construct($key)
+    public function __construct($key)
     {
         $this->key = $key;
 
-        parent::__construct(sprintf("Parameter with key \"%s\" does not exist.", $key));
+        parent::__construct(sprintf('Parameter with key "%s" does not exist.', $key));
     }
 
     /**

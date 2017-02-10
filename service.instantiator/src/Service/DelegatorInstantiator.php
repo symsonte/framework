@@ -15,7 +15,7 @@ class DelegatorInstantiator implements Instantiator
     /**
      * @param Instantiator[] $instantiators
      */
-    function __construct($instantiators)
+    public function __construct($instantiators)
     {
         $this->instantiators = $instantiators;
     }

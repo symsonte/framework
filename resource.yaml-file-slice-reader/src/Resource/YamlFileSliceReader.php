@@ -77,7 +77,7 @@ class YamlFileSliceReader implements SliceReader
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function next($iterator)
     {
@@ -89,7 +89,7 @@ class YamlFileSliceReader implements SliceReader
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function close($iterator)
     {

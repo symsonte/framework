@@ -8,7 +8,7 @@ namespace Symsonte\Resource;
 abstract class AbstractDefinition implements Definition
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function import($data)
     {
@@ -22,7 +22,7 @@ abstract class AbstractDefinition implements Definition
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function export()
     {

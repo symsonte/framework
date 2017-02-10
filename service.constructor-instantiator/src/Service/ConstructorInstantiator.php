@@ -2,9 +2,9 @@
 
 namespace Symsonte\Service;
 
+use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
 use Symsonte\Service\Declaration\Argument\Processor as ArgumentProcessor;
 use Symsonte\Service\Declaration\Call\Processor as CallProcessor;
-use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -31,12 +31,11 @@ class ConstructorInstantiator implements Instantiator
      * @param CallProcessor               $callProcessor
      * @param BaseConstructorInstantiator $instantiator
      */
-    function __construct(
+    public function __construct(
         ArgumentProcessor $argumentProcessor,
         CallProcessor $callProcessor,
         BaseConstructorInstantiator $instantiator
-    )
-    {
+    ) {
         $this->argumentProcessor = $argumentProcessor;
         $this->callProcessor = $callProcessor;
         $this->instantiator = $instantiator;
@@ -55,9 +54,9 @@ class ConstructorInstantiator implements Instantiator
      *
      * @param ConstructorDeclaration $declaration
      *
-     * @return object
-     *
      * @throws UnsupportedDeclarationException if the declaration is not supported
+     *
+     * @return object
      */
     public function instantiate($declaration)
     {

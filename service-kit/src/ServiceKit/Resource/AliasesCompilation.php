@@ -2,8 +2,6 @@
 
 namespace Symsonte\ServiceKit\Resource;
 
-use Symsonte\Service\Declaration;
-
 class AliasesCompilation
 {
     /**
@@ -14,7 +12,7 @@ class AliasesCompilation
     /**
      * @param array $aliases
      */
-    function __construct($aliases = [])
+    public function __construct($aliases = [])
     {
         $this->aliases = $aliases;
     }

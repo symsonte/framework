@@ -4,8 +4,8 @@ namespace Symsonte\ServiceKit\Resource;
 
 use Symsonte\Resource\DelegatorNormalizer;
 use Symsonte\Resource\Normalizer;
-use Symsonte\Resource\YamlFileResource;
 use Symsonte\Resource\UnsupportedDataAndResourceException;
+use Symsonte\Resource\YamlFileResource;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -38,7 +38,7 @@ class YamlFileNormalizer implements Normalizer
      *     normalizers: '#symsonte.service_kit.resource.yaml_file_normalizer'
      * })
      */
-    function __construct(array $normalizers)
+    public function __construct(array $normalizers)
     {
         $this->normalizer = new DelegatorNormalizer($normalizers);
     }

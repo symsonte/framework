@@ -16,7 +16,7 @@ class NonInstantiableServiceException extends \InvalidArgumentException
      * @param string $id
      * @param string $message
      */
-    function __construct($id, $message)
+    public function __construct($id, $message)
     {
         $this->$id = $id;
 

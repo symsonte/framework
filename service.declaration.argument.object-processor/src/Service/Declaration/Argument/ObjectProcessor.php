@@ -12,9 +12,9 @@ class ObjectProcessor implements Processor
     /**
      * @param ObjectArgument $argument
      *
-     * @return object
-     *
      * @throws UnsupportedArgumentException if the argument is not supported.
+     *
+     * @return object
      */
     public function process($argument)
     {
