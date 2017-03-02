@@ -1,0 +1,85 @@
+<?php
+
+namespace Symsonte\Http\Server\Request;
+
+use Zend\Diactoros\ServerRequest;
+use Zend\Diactoros\ServerRequestFactory;
+
+/**
+ * @author Yosmany Garcia <yosmanyga@gmail.com>
+ *
+ * @ds\service({
+ *     private: true
+ * })
+ *
+ * @di\service({
+ *     private: true
+ * })
+ */
+class DiactorosResolver implements Resolver
+{
+    /**
+     * @var ServerRequest
+     */
+    private $request;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveMethod()
+    {
+        return $this->resolveRequest()->getMethod();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveUri()
+    {
+        return $this->resolveRequest()->getUri();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveVersion()
+    {
+        return $this->resolveRequest()->getProtocolVersion();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveHeaders()
+    {
+        return $this->resolveRequest()->getHeaders();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveBody()
+    {
+        return $this->resolveRequest()->getBody();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveParsedBody()
+    {
+        return $this->resolveRequest()->getParsedBody();
+    }
+
+    /**
+     * @return ServerRequest
+     */
+    private function resolveRequest()
+    {
+        if (is_null($this->request)) {
+            $this->request = ServerRequestFactory::fromGlobals();
+        }
+
+        return $this->request;
+    }
+}

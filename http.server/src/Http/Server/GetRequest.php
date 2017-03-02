@@ -10,7 +10,7 @@ class GetRequest
     use UriTrait;
     use HeadersTrait;
 
-    function __construct($uri, $headers)
+    public function __construct($uri, $headers)
     {
         $this->uri = $uri;
         $this->headers = $headers;

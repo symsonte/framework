@@ -24,7 +24,7 @@ class Processor
     public function process(FileField $field, $filename = null)
     {
         $filename = $filename ?: sprintf(
-            "%s/%s.%s",
+            '%s/%s.%s',
             sys_get_temp_dir(),
             uniqid(),
             pathinfo($field->getFile(), PATHINFO_EXTENSION)

@@ -7,9 +7,9 @@ use Symsonte\Http\Server\Request\Authentication\Credential;
 interface Resolver
 {
     /**
-     * @return Credential
-     *
      * @throws UnresolvableException
+     *
+     * @return Credential
      */
     public function resolve();
 }

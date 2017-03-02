@@ -18,7 +18,7 @@ class StringField implements Field
      * @param string $key
      * @param string $value
      */
-    function __construct($key, $value)
+    public function __construct($key, $value)
     {
         $this->key = $key;
         $this->value = $value;

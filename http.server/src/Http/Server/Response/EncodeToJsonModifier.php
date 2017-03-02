@@ -71,7 +71,7 @@ class EncodeToJsonModifier implements Modifier
      */
     private function getValues($array)
     {
-        $flat = array();
+        $flat = [];
 
         foreach ($array as $value) {
             if (is_array($value)) {
