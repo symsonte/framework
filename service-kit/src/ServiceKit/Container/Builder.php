@@ -79,7 +79,7 @@ class Builder
                 ),
                 $this->createCircularCallStorer($bag),
                 $callProcessor
-            )
+            ),
         ]);
         $objectContainer->add('symsonte.service_kit.container', $container);
         $serviceArgumentProcessor->setContainer($container);
