@@ -40,12 +40,12 @@ class RuntimeInstaller implements Installer
         foreach ($this->dirs as $dir) {
             $bag->merge(
                 $this->loader->load([
-                    'dir' => $dir,
+                    'dir'    => $dir,
                     'filter' => '*.php',
-                    'extra' => [
-                        'type' => 'annotation',
-                        'annotation' => '/^di\\\\/'
-                    ]
+                    'extra'  => [
+                        'type'       => 'annotation',
+                        'annotation' => '/^di\\\\/',
+                    ],
                 ])
             );
         }

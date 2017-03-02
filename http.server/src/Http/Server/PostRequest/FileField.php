@@ -36,19 +36,18 @@ class FileField implements Field
      * @param string         $mime
      * @param string         $size
      */
-    function __construct(
+    public function __construct(
         $key,
         \SplFileObject $file,
         $name,
         $mime,
         $size
-    )
-    {
+    ) {
         $this->key = $key;
         $this->file = $file;
         $this->name = $name;
         $this->mime = $mime;
-        $this->size  = $size;
+        $this->size = $size;
     }
 
     /**

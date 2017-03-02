@@ -5,6 +5,8 @@ namespace Symsonte\Cli\Server;
 use Symsonte\Cli\Server;
 use Symsonte\Cli\Server\Input\Resolution\Finder;
 use Symsonte\ConstructorInstantiator as BaseConstructorInstantiator;
+use Symsonte\Resource\Builder;
+use Symsonte\Resource\DelegatorBuilder;
 use Symsonte\Service\CachedInstantiator;
 use Symsonte\Service\ConstructorInstantiator;
 use Symsonte\Service\Container;
@@ -16,8 +18,6 @@ use Symsonte\Service\DeductibleContainer;
 use Symsonte\Service\OrdinaryContainer;
 use Symsonte\ServiceKit\Declaration\Bag;
 use Symsonte\ServiceKit\Resource\Loader;
-use Symsonte\Resource\Builder;
-use Symsonte\Resource\DelegatorBuilder;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>

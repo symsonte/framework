@@ -36,7 +36,7 @@ class ConstructorDeclaration implements Declaration
      * @param Argument[]|null $arguments
      * @param Call[]|null     $calls
      */
-    function __construct($id = null, $class, $arguments = null, $calls = null)
+    public function __construct($id, $class, $arguments = null, $calls = null)
     {
         $this->id = $id;
         $this->class = $class;
@@ -101,6 +101,6 @@ class ConstructorDeclaration implements Declaration
      */
     public function addCall(Call $call)
     {
-        $this->calls[]  = $call;
+        $this->calls[] = $call;
     }
 }
