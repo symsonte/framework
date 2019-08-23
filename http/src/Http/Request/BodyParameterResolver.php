@@ -2,21 +2,21 @@
 
 namespace Symsonte\Http\Request;
 
-use Symsonte\Call\Parameter\ConvertionStorer;
-use Symsonte\Call\ParameterConverter;
+use Symsonte\Call\Parameter\ResolutionStorer;
+use Symsonte\Call\ParameterResolver;
 use Symsonte\Http;
 
 /**
  * @di\service({
- *     tags: ['symsonte.call.parameter_converter']
+ *     tags: ['symsonte.call.parameter_resolver']
  * })
  */
-class BodyParameterConverter implements ParameterConverter
+class BodyParameterResolver implements ParameterResolver
 {
     /**
-     * @var ConvertionStorer
+     * @var ResolutionStorer
      */
-    private $convertionStorer;
+    private $resolutionStorer;
 
     /**
      * @var Http\Server
@@ -24,32 +24,28 @@ class BodyParameterConverter implements ParameterConverter
     private $server;
 
     /**
-     * @param ConvertionStorer $convertionStorer
+     * @param ResolutionStorer $resolutionStorer
      * @param Http\Server      $server
      */
     public function __construct(
-        ConvertionStorer $convertionStorer,
+        ResolutionStorer $resolutionStorer,
         Http\Server $server
     ) {
-        $this->convertionStorer = $convertionStorer;
+        $this->resolutionStorer = $resolutionStorer;
         $this->server = $server;
     }
 
     /**
-     * @param string  $class
-     * @param string  $method
-     * @param mixed[] $parameters
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function convert(
+    public function resolve(
         string $class,
         string $method,
         array $parameters
     ) {
         $convertions = [];
         
-        $key = $this->convertionStorer->find(
+        $key = $this->resolutionStorer->find(
             $class,
             $method,
             'http\request\body'
@@ -61,7 +57,7 @@ class BodyParameterConverter implements ParameterConverter
 
         $convertions[$key] = $this->server->resolveBody();
 
-        $key = $this->convertionStorer->find(
+        $key = $this->resolutionStorer->find(
             $class,
             $method,
             'http\request\parsedBody'

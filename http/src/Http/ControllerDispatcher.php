@@ -64,7 +64,7 @@ class ControllerDispatcher
      * @param PreDispatcher[]    $preDispatcherServices
      * @param Container          $serviceContainer
      * @param ParametersResolver $parametersResolver
-     * @param Caller       $controllerCaller
+     * @param Caller             $controllerCaller
      * @param Server             $server
      */
     public function __construct(

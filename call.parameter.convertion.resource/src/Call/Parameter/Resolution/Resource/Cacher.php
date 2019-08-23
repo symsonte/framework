@@ -1,6 +1,6 @@
 <?php
 
-namespace Symsonte\Call\Parameter\Convertion\Resource;
+namespace Symsonte\Call\Parameter\Resolution\Resource;
 
 use Symsonte\Resource\Cacher\Approver;
 use Symsonte\Resource\Cacher as BaseCacher;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Symsonte\Call\Parameter\Convertion\Resource;
+namespace Symsonte\Call\Parameter\Resolution\Resource;
 
-use Symsonte\Call\Parameter\Convertion;
+use Symsonte\Call\Parameter\Resolution;
 use Symsonte\Resource\Compiler as BaseCompiler;
 use Symsonte\Resource\UnsupportedNormalizationException;
 
@@ -11,12 +11,12 @@ use Symsonte\Resource\UnsupportedNormalizationException;
  *
  * @ds\service({
  *     private: true,
- *     tags: ['symsonte.call.parameter.resource.compiler']
+ *     tags: ['symsonte.call.parameter.resolution.resource.compiler']
  * })
  *
  * @di\service({
  *     private: true,
- *     tags: ['symsonte.call.parameter.resource.compiler']
+ *     tags: ['symsonte.call.parameter.resolution.resource.compiler']
  * })
  */
 class Compiler implements BaseCompiler
@@ -35,7 +35,7 @@ class Compiler implements BaseCompiler
         }
 
         return new Compilation(
-            new Convertion(
+            new Resolution(
                 $normalization->class,
                 $normalization->method,
                 $normalization->parameter,

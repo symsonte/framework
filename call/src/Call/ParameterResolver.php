@@ -2,7 +2,7 @@
 
 namespace Symsonte\Call;
 
-interface ParameterConverter
+interface ParameterResolver
 {
     /**
      * @param string   $class
@@ -11,5 +11,5 @@ interface ParameterConverter
      *
      * @return array
      */
-    public function convert(string $class, string $method, array $parameters);
+    public function resolve(string $class, string $method, array $parameters);
 }

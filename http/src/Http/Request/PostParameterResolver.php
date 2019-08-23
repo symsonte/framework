@@ -2,15 +2,15 @@
 
 namespace Symsonte\Http\Request;
 
-use Symsonte\Call\ParameterConverter;
+use Symsonte\Call\ParameterResolver;
 use Symsonte\Http;
 
 /**
  * @di\service({
- *     tags: ['symsonte.call.parameter_converter']
+ *     tags: ['symsonte.call.parameter_resolver']
  * })
  */
-class PostParameterConverter implements ParameterConverter
+class PostParameterResolver implements ParameterResolver
 {
     /**
      * @var Http\Server
@@ -27,13 +27,9 @@ class PostParameterConverter implements ParameterConverter
     }
 
     /**
-     * @param string  $class
-     * @param string  $method
-     * @param mixed[] $parameters
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function convert(
+    public function resolve(
         string $class,
         string $method,
         array $parameters

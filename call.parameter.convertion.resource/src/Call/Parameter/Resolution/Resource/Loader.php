@@ -1,8 +1,8 @@
 <?php
 
-namespace Symsonte\Call\Parameter\Convertion\Resource;
+namespace Symsonte\Call\Parameter\Resolution\Resource;
 
-use Symsonte\Call\Parameter\Convertion;
+use Symsonte\Call\Parameter\Resolution;
 use Symsonte\Resource\Builder;
 use Symsonte\Resource\Cacher;
 use Symsonte\Resource\Compiler as BaseCompiler;
@@ -12,6 +12,9 @@ use Symsonte\Resource\DelegatorNormalizer;
 use Symsonte\Resource\DelegatorSliceReader;
 use Symsonte\Resource\Normalizer;
 use Symsonte\Resource\SliceReader;
+use Symsonte\Resource\UnsupportedDataAndResourceException;
+use Symsonte\Resource\UnsupportedMetadataException;
+use LogicException;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -61,16 +64,16 @@ class Loader
      * @ds\arguments({
      *     builders:     '#symsonte.resource.builder',
      *     slideReaders: '#symsonte.resource.slice_reader',
-     *     normalizers:  '#symsonte.call.parameter.resource.normalizer',
-     *     compilers:    '#symsonte.call.parameter.resource.compiler',
+     *     normalizers:  '#symsonte.call.parameter.resolution.resource.normalizer',
+     *     compilers:    '#symsonte.call.parameter.resolution.resource.compiler',
      *     cacher:       '@symsonte.resource.ordinary_cacher'
      * })
      *
      * @di\arguments({
      *     builders:     '#symsonte.resource.builder',
      *     slideReaders: '#symsonte.resource.slice_reader',
-     *     normalizers:  '#symsonte.call.parameter.resource.normalizer',
-     *     compilers:    '#symsonte.call.parameter.resource.compiler',
+     *     normalizers:  '#symsonte.call.parameter.resolution.resource.normalizer',
+     *     compilers:    '#symsonte.call.parameter.resolution.resource.compiler',
      *     cacher:       '@symsonte.resource.ordinary_cacher'
      * })
      */
@@ -91,11 +94,15 @@ class Loader
     /**
      * @param mixed $metadata
      *
-     * @return Convertion[]
+     * @return Resolution[]
      */
     public function load($metadata)
     {
-        $resource = $this->builder->build($metadata);
+        try {
+            $resource = $this->builder->build($metadata);
+        } catch (UnsupportedMetadataException $e) {
+            throw new LogicException(null, null, $e);
+        }
 
         if ($this->cacher->approve($resource)) {
             return unserialize($this->cacher->retrieve($resource));
@@ -103,27 +110,31 @@ class Loader
 
         $iterator = $this->sliceReader->init($resource);
 
-        $convertions = [];
+        $resolutions = [];
 
         while ($data = $this->sliceReader->current($iterator)) {
-            $normalization = $this->normalizer->normalize($data, $resource);
+            try {
+                $normalization = $this->normalizer->normalize($data, $resource);
+            } catch (UnsupportedDataAndResourceException $e) {
+                throw new LogicException(null, null, $e);
+            }
             $compilation = $this->compiler->compile($normalization);
             unset($normalization);
 
             if ($compilation instanceof Compilation) {
-                $convertion = $compilation->getConvertion();
+                $resolution = $compilation->getResolution();
 
-                $convertions[] = $convertion;
+                $resolutions[] = $resolution;
             }
 
             $this->sliceReader->next($iterator);
         }
 
         $this->cacher->store(
-            serialize($convertions),
+            serialize($resolutions),
             $resource
         );
 
-        return $convertions;
+        return $resolutions;
     }
 }
