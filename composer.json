@@ -3,7 +3,7 @@
     "require": {
         "php": ">=7.2",
         "ext-json": "*",
-        "symfony/yaml": "~2.6",
+        "symfony/yaml": "~5",
         "composer/composer": "~1",
         "ocramius/proxy-manager": "1.0.*",
         "zendframework/zend-servicemanager": "~2.5",

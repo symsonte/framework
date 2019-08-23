@@ -1,6 +1,6 @@
 <?php
 
-namespace Symsonte\Call\Parameter\Convertion\Resource;
+namespace Symsonte\Call\Parameter\Resolution\Resource;
 
 use Symsonte\Resource\FilesNormalizer as InternalFilesNormalizer;
 use Symsonte\Resource\Normalizer;
@@ -10,12 +10,12 @@ use Symsonte\Resource\Normalizer;
  *
  * @ds\service({
  *     private: true,
- *     tags: ['symsonte.call.parameter.resource.normalizer']
+ *     tags: ['symsonte.call.parameter.resolution.resource.normalizer']
  * })
  *
  * @di\service({
  *     private: true,
- *     tags: ['symsonte.call.parameter.resource.normalizer']
+ *     tags: ['symsonte.call.parameter.resolution.resource.normalizer']
  * })
  */
 class FilesNormalizer implements Normalizer
@@ -29,11 +29,11 @@ class FilesNormalizer implements Normalizer
      * @param Normalizer[] $normalizers
      *
      * @ds\arguments({
-     *     normalizers: '#symsonte.call.parameter.resource.file_normalizer'
+     *     normalizers: '#symsonte.call.parameter.resolution.resource.file_normalizer'
      * })
      *
      * @di\arguments({
-     *     normalizers: '#symsonte.call.parameter.resource.file_normalizer'
+     *     normalizers: '#symsonte.call.parameter.resolution.resource.file_normalizer'
      * })
      */
     public function __construct(array $normalizers)

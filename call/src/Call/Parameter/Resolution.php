@@ -5,7 +5,7 @@ namespace Symsonte\Call\Parameter;
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  */
-class Convertion
+class Resolution
 {
     /**
      * @var string

@@ -1,6 +1,6 @@
 <?php
 
-namespace Symsonte\Call\Parameter\Convertion\Resource;
+namespace Symsonte\Call\Parameter\Resolution\Resource;
 
 use Symsonte\Resource\AnnotationFileResource;
 use Symsonte\Resource\Normalizer;
@@ -11,12 +11,12 @@ use Symsonte\Resource\UnsupportedDataAndResourceException;
  *
  * @ds\service({
  *     private: true,
- *     tags: ['symsonte.call.parameter.resource.file_normalizer', 'symsonte.call.parameter.resource.normalizer']
+ *     tags: ['symsonte.call.parameter.resolution.resource.file_normalizer', 'symsonte.call.parameter.resolution.resource.normalizer']
  * })
  *
  * @di\service({
  *     private: true,
- *     tags: ['symsonte.call.parameter.resource.file_normalizer', 'symsonte.call.parameter.resource.normalizer']
+ *     tags: ['symsonte.call.parameter.resolution.resource.file_normalizer', 'symsonte.call.parameter.resolution.resource.normalizer']
  * })
  */
 class AnnotationFileNormalizer implements Normalizer

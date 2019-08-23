@@ -16,16 +16,16 @@ use LogicException;
 class ParametersResolver
 {
     /**
-     * @var ParameterConverter[]
+     * @var ParameterResolver[]
      */
     private $parameterConverters;
 
     /**
      * @di\arguments({
-     *     parameterConverters: '#symsonte.call.parameter_converter'
+     *     parameterConverters: '#symsonte.call.parameter_resolver'
      * })
      *
-     * @param ParameterConverter[] $parameterConverters
+     * @param ParameterResolver[] $parameterConverters
      */
     public function __construct(array $parameterConverters)
     {
@@ -61,7 +61,7 @@ class ParametersResolver
         foreach ($this->parameterConverters as $parameterConverter) {
             $convertions = array_merge(
                 $convertions,
-                $parameterConverter->convert($class, $method, $parameters)
+                $parameterConverter->resolve($class, $method, $parameters)
             );
         }
 

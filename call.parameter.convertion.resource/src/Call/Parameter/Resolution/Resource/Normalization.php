@@ -1,6 +1,6 @@
 <?php
 
-namespace Symsonte\Call\Parameter\Convertion\Resource;
+namespace Symsonte\Call\Parameter\Resolution\Resource;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>

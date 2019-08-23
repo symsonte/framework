@@ -13,19 +13,19 @@ namespace Symsonte\Call\Parameter;
  *     private: true
  * })
  */
-class ConvertionStorer
+class ResolutionStorer
 {
     /**
-     * @var Convertion[]
+     * @var Resolution[]
      */
-    private $convertions;
+    private $resolutions;
 
     /**
-     * @param Convertion[] $convertions
+     * @param Resolution[] $resolutions
      */
-    public function __construct($convertions = [])
+    public function __construct($resolutions = [])
     {
-        $this->convertions = $convertions;
+        $this->resolutions = $resolutions;
     }
 
     /**
@@ -40,13 +40,13 @@ class ConvertionStorer
         string $method,
         string $value
     ) {
-        foreach ($this->convertions as $convertion) {
+        foreach ($this->resolutions as $resolution) {
             if (
-                $convertion->getClass() == $class
-                && $convertion->getMethod() == $method
-                && $convertion->getValue() == $value
+                $resolution->getClass() == $class
+                && $resolution->getMethod() == $method
+                && $resolution->getValue() == $value
             ) {
-                return $convertion->getParameter();
+                return $resolution->getParameter();
             }
         }
 
@@ -54,14 +54,14 @@ class ConvertionStorer
     }
 
     /**
-     * @param Convertion[] $convertions
+     * @param Resolution[] $resolutions
      */
     public function merge(
-        $convertions
+        $resolutions
     ) {
-        $this->convertions = array_merge(
-            $this->convertions,
-            $convertions
+        $this->resolutions = array_merge(
+            $this->resolutions,
+            $resolutions
         );
     }
 }

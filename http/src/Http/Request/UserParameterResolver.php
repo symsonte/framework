@@ -2,23 +2,23 @@
 
 namespace Symsonte\Http\Request;
 
-use Symsonte\Call\Parameter\ConvertionStorer;
-use Symsonte\Call\ParameterConverter;
+use Symsonte\Call\Parameter\ResolutionStorer;
+use Symsonte\Call\ParameterResolver;
 use Symsonte\Authentication;
 use Symsonte\Http;
 use LogicException;
 
 /**
  * @di\service({
- *     tags: ['symsonte.call.parameter_converter']
+ *     tags: ['symsonte.call.parameter_resolver']
  * })
  */
-class UserParameterConverter implements ParameterConverter
+class UserParameterResolver implements ParameterResolver
 {
     /**
-     * @var ConvertionStorer
+     * @var ResolutionStorer
      */
-    private $convertionStorer;
+    private $resolutionStorer;
 
     /**
      * @var Http\Authentication\CredentialResolver
@@ -31,35 +31,31 @@ class UserParameterConverter implements ParameterConverter
     private $processor;
 
     /**
-     * @param ConvertionStorer $convertionStorer
+     * @param ResolutionStorer                       $resolutionStorer
      * @param Http\Authentication\CredentialResolver $resolver
-     * @param Authentication\CredentialProcessor $processor
+     * @param Authentication\CredentialProcessor     $processor
      */
     public function __construct(
-        ConvertionStorer $convertionStorer, 
-        Http\Authentication\CredentialResolver $resolver, 
+        ResolutionStorer $resolutionStorer,
+        Http\Authentication\CredentialResolver $resolver,
         Authentication\CredentialProcessor $processor
     ) {
-        $this->convertionStorer = $convertionStorer;
+        $this->resolutionStorer = $resolutionStorer;
         $this->resolver = $resolver;
         $this->processor = $processor;
     }
 
     /**
-     * @param string  $class
-     * @param string  $method
-     * @param mixed[] $parameters
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function convert(
+    public function resolve(
         string $class,
         string $method,
         array $parameters
     ) {
         $convertions = [];
         
-        $key = $this->convertionStorer->find(
+        $key = $this->resolutionStorer->find(
             $class,
             $method,
             "http\\request\\user"
